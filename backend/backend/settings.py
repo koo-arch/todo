@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "todo.apps.BackendAppConfig",
+    "account.apps.BackendAppConfig",
     "rest_framework",
     "corsheaders",
 ]
