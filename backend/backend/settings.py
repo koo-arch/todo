@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "todo.apps.BackendAppConfig",
-    "account.apps.BackendAppConfig",
+    "account.apps.AccountConfig",
     "rest_framework",
     "corsheaders",
 ]
@@ -116,3 +116,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
 ]
+
+AUTH_USER_MODEL = 'account.CustomUser'
