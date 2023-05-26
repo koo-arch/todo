@@ -1,15 +1,20 @@
 from rest_framework import serializers
 
-from .models import User, Task, Finished
+from .models import CustomUser, Task, Finished
 
-class UserSerializer(serializers.ModelSerializer):
+
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = (
             "id",
-            "user_name",
             "password",
+            "last_login",
+            "is_superuser",
+            "email",
+            "is_staff",
         )
+
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +26,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "text",
             "date"
         )
+
 
 class FinishedSerializer(serializers.ModelSerializer):
     class Meta:

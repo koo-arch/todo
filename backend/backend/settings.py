@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "todo.apps.BackendAppConfig",
-    "account.apps.AccountConfig",
+    "todo.apps.TodoConfig",
     "rest_framework",
     "corsheaders",
 ]
@@ -117,4 +116,4 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
 ]
 
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'todo.CustomUser'
