@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import CustomUser, Task, Finished
+from .models import UserManager, CustomUser, Task, Finished
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -8,12 +8,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = (
             "id",
-            "password",
-            "last_login",
-            "is_superuser",
             "email",
-            "is_staff",
+            "password",
         )
+    
+    def create(self, validated_data):
+        return CustomUser.objects.create_user(**validated_data)
 
 
 class TaskSerializer(serializers.ModelSerializer):

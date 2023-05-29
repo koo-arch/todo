@@ -1,15 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from todo.urls import user_router, task_router, finished_router
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-api_urlpatterns = [
-    path("users/", include(user_router.urls)),
-    path("task/", include(task_router.urls)),
-    path("finished/", include(finished_router.urls)),
-]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/", include(api_urlpatterns)),
+    path("api/v1/token/", TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path("api/v1/token/refresh", TokenRefreshView.as_view(), name='token_refresh'),
+    path("api/v1/", include("todo.urls")),
 ]
