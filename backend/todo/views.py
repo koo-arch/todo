@@ -5,7 +5,6 @@ from rest_framework import authentication, permissions, generics
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
-from rest_framework import viewsets
 from .models import CustomUser, Task, Finished
 from .serializers import CustomUserSerializer, TaskSerializer, FinishedSerializer
 
@@ -34,15 +33,18 @@ class AuthInfoGetView(generics.RetrieveAPIView):
         return super().get(request, *args, **kwargs)
 
 class UserList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
 
 class TaskViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
 class FinishedViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Finished.objects.all()
     serializer_class = FinishedSerializer

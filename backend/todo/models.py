@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import auth
+from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
@@ -100,7 +101,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Task(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     task_name = models.CharField(max_length=200)
     text = models.CharField(max_length=500)
     date = models.DateTimeField("date_published")
@@ -110,7 +111,7 @@ class Task(models.Model):
 
 
 class Finished(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     finish_task = models.CharField(max_length=200)
     text = models.CharField(max_length=500)
     date = models.DateTimeField("date_published")
