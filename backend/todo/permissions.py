@@ -6,9 +6,13 @@ class IsGreneralUser(BasePermission):
 
         if request.user.is_superuser:
             return True
-        else:
-            return False
+        
+        return False
 
+class IsSuperUser(BasePermission):
+    def has_permission(self, request, view):
+
+        return request.user.is_superuser
 
 class IsMyselfToRetrieveUpdateDestroy(BasePermission):
 
