@@ -3,16 +3,14 @@ from django.urls import path, include
 from .views import AuthRegister, AuthInfoGetView, UserList, TaskViewSet, FinishedViewSet
 
 
-task_router = DefaultRouter()
-finished_router = DefaultRouter()
+router = DefaultRouter()
 
-task_router.register(r'', TaskViewSet)
-finished_router.register(r'', FinishedViewSet)
+router.register(r'task', TaskViewSet)
+router.register(r'finished', FinishedViewSet)
+router.register(r'myinfo', AuthInfoGetView)
 
 urlpatterns = [
-    path("task/", include(task_router.urls)),
-    path("finished/", include(finished_router.urls)),
-    path("myinfo/", AuthInfoGetView.as_view()),
+    path("", include(router.urls)),
     path("register/", AuthRegister.as_view()),
     path("userlist/", UserList.as_view()),
 ]

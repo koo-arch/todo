@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
 from .models import CustomUser, Task, Finished
 from .serializers import CustomUserSerializer, TaskSerializer, FinishedSerializer
+from .permissions import IsGreneralUser, IsSuperUser, IsMyselfToRetrieveUpdateDestroy
 
 
 # ユーザ作成のView(POST)
@@ -24,27 +25,34 @@ class AuthRegister(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class AuthInfoGetView(generics.RetrieveAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+class AuthInfoGetView(viewsets.ModelViewSet):
+    permission_classes = (IsMyselfToRetrieveUpdateDestroy,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    def get_queryset(self):
+        return CustomUser.objects.filter(id=self.request.user.id)
+    
 
 class UserList(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated, IsSuperUser,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsMyselfToRetrieveUpdateDestroy, )
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user.id)
+
 
 class FinishedViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsMyselfToRetrieveUpdateDestroy, )
     queryset = Finished.objects.all()
     serializer_class = FinishedSerializer
+
+    def get_queryset(self):
+        return Finished.objects.filter(user=self.request.user.id)
