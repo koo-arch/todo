@@ -1,22 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import { Header } from './Header';
-import { Home } from './top';
+import { Top } from './Top';
 import { Register } from './Register';
-import { Login } from './Login';
 import { Todo } from './Todo';
 
 const App = () => {
   return(
     <>
-      <Router>
+      <BrowserRouter>
         <Header/>
         <>
-          <Switch>
-
-          </Switch>
+          <Routes>
+            <Route path='/' element={<Top/>}/>
+            <Route path='/register' element={<Register/>}/>
+            <Route path='/todo' element={<Todo/>}/>
+          </Routes>
         </>
-      </Router>
+      </BrowserRouter>
     </>
   )
 }
