@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Top = () => {
+const top = () => {
     return (
         <>
             <button>新規登録</button>
@@ -10,4 +10,4 @@ const Top = () => {
     );
 };
 
-export default Top;
+export default top;
