@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, } from 'react-router-dom';
-import { Header } from './header.js';
-import { Top } from './top.js';
-import { Register } from './register.js';
-import { Todo } from './todo.js';
+import Header from './header.js';
+import Top from './top.js';
+import Register from './register.js';
+import Todo from './todo.js';
 
 const App = () => {
   return(

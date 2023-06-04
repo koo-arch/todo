@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import { axios } from './api/axios.js';
-import { requests } from './api/requests.js';
+import { useNavigate } from 'react-router-dom';
+import axios from './api/axios.js';
+import requests from './api/requests.js';
 
-const login = (props) => {
-    const history = useHistory();
+const Login = (props) => {
+    const navigation = useNavigate();
 
     const [cookies, setCookie] = useCookies();
     const { register, handleSubmit, watch, errors } = useForm();
@@ -21,9 +21,9 @@ const login = (props) => {
         )
         .then(function (response) {
             console.log(response.data.access)
-            setCookie('accesstoken', response.data.access, { path: '/' }, { httpOnly: true })
-            setCookie('refreshtoken', response.data.refresh, { path: '/' }, { httpOnly: true })
-            history.push('/');
+            setCookie('accesstoken', response.data.access, { path: '/todo' }, { httpOnly: true })
+            setCookie('refreshtoken', response.data.refresh, { path: '/todo' }, { httpOnly: true })
+            navigation('/todo');
         })
         .catch(err => {
             console.log("miss")
@@ -48,4 +48,4 @@ const login = (props) => {
     );
 };
 
-export default login;
+export default Login;
