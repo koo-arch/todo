@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from './api/axios.js';
-import requests from './api/requests.js';
+import urls from './api/urls.js';
 
 const Login = (props) => {
     const navigation = useNavigate();
@@ -13,7 +13,7 @@ const Login = (props) => {
 
     const getJwt = async(data) => {
         console.log(data)
-        await axios.post(requests.Login,
+        await axios.post(urls.Login,
             {
                 email: data.email,
                 password: data.password,

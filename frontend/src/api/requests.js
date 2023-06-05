@@ -1,9 +1,12 @@
-const requests = {
-    TaskList: `/task/`,
-    FinishedList: `/finished/`,
-    Register: `/register/`,
-    Login: `/token/`,
-    Refresh: `/token/refresh/`,
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+const headers = {
+    'Content-Type': 'Application/json',
+    'Authorization': `JWT ${cookies.get('accecctoken')}`
 }
 
-export default requests;
+export const postLogin = () => {
+    
+}
