@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "todo.apps.TodoConfig",
     "rest_framework",
     "corsheaders",
+    "djoser",
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
+    #トークンをJWTに設定
+    'AUTH_HEADER_TYPES': ('JWT'),
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': True,
