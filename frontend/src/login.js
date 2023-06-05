@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import axios from './api/axios.js';
-import urls from './api/urls.js';
+import { postLogin } from './api/requests.js';
 
 const Login = (props) => {
     const navigation = useNavigate();
@@ -11,14 +10,9 @@ const Login = (props) => {
     const [cookies, setCookie] = useCookies();
     const { register, handleSubmit, watch, errors } = useForm();
 
-    const getJwt = async(data) => {
+    const getJwt = (data) => {
         console.log(data)
-        await axios.post(urls.Login,
-            {
-                email: data.email,
-                password: data.password,
-            },
-        )
+        postLogin(data)
         .then(function (response) {
             console.log(response.data.access)
             setCookie('accesstoken', response.data.access, { path: '/todo' }, { httpOnly: true })
@@ -28,6 +22,7 @@ const Login = (props) => {
         .catch(err => {
             console.log("miss")
             alert("Emailかパスワードが違います");
+            throw new Error(err);
         });
     };
     return (
