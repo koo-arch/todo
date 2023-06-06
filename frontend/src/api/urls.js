@@ -1,9 +1,9 @@
 const urls = {
     TaskList: `/task/`,
     FinishedList: `/finished/`,
-    Register: `/register/`,
-    Login: `/token/`,
-    Refresh: `/token/refresh/`,
+    Register: `/auth/users/`,
+    Login: `/auth/jwt/create/`,
+    Refresh: `/auth/jwt/refresh/`,
 }
 
 export default urls;
