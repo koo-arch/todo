@@ -8,12 +8,10 @@ router = DefaultRouter()
 
 router.register(r'task', TaskViewSet)
 router.register(r'finished', FinishedViewSet)
-router.register(r'myinfo', AuthInfoGetView)
 
 urlpatterns = [
     path("", include(router.urls)),
     path("auth/", include('djoser.urls')),
     path("auth/", include('djoser.urls.jwt')),
     path("register/", AuthRegister.as_view()),
-    path("userlist/", UserList.as_view()),
 ]
