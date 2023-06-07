@@ -15,8 +15,8 @@ const Login = (props) => {
         postLogin(data)
         .then(function (response) {
             console.log(response.data.access)
-            setCookie('accesstoken', response.data.access, { path: '/todo' }, { httpOnly: true })
-            setCookie('refreshtoken', response.data.refresh, { path: '/todo' }, { httpOnly: true })
+            setCookie('accesstoken', response.data.access, { path: '/' }, { httpOnly: true })
+            setCookie('refreshtoken', response.data.refresh, { path: '/' }, { httpOnly: true })
             navigation('/todo');
         })
         .catch(err => {

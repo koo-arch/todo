@@ -7,8 +7,8 @@ const Logout = (props) => {
     const [cookies, setCookie, removeCookie] = useCookies();
 
     const removeJWT = () => {
-        removeCookie('accesstoken', { path: '/todo'}, {httpOnly: true});
-        removeCookie('refreshtoken', { path: '/todo'}, {httpOnly: true});
+        removeCookie('accesstoken', { path: '/'}, {httpOnly: true});
+        removeCookie('refreshtoken', { path: '/'}, {httpOnly: true});
         navigation('/');
         console.log('ログアウト');
         console.log(cookies);
