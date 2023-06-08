@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logout from './logout';
 import Cookies from 'universal-cookie';
+import Redirect from './redirectToTop';
+import { config } from './api/requests';
 
 const todo = () => {
-  const cookies = new Cookies();
-  console.log(cookies.get('accesstoken'))
-  console.log(cookies.get('refreshtoken'))
+  const cookie = new Cookies();
+  const token = cookie.get('accesstoken');
+  console.log(config(cookie.get('accesstoken')));
+  Redirect(token);
   return (
     <div>
       <Logout />

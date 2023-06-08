@@ -4,9 +4,12 @@ import urls from './urls.js';
 
 const cookies = new Cookies();
 
-const headers = {
-    'Content-Type': 'Application/json',
-    'Authorization': `JWT ${cookies.get('accecctoken')}`
+export const config = (cookie) => {
+    const headers = {
+        'Content-Type': 'Application/json',
+        'Authorization': `JWT ${cookie}`
+    }
+    return headers;
 }
 
 export const postLogin = async(data) =>  {
@@ -16,5 +19,11 @@ export const postLogin = async(data) =>  {
             password: data.password,
         },
     )
+    return res;
+}
+
+export const getUserInfo = async(data) => {
+    console.log(config(data))
+    const res = await axios.get(urls.UserInfo, { headers: config(data) })
     return res;
 }
