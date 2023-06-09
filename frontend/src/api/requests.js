@@ -22,9 +22,9 @@ export const postLogin = async(data) =>  {
     return res;
 }
 
-export const getUserInfo = async(accsess) => {
-    console.log(config(accsess))
-    const res = await axios.get(urls.UserInfo, { headers: config(accsess) })
+export const getUserInfo = async(access) => {
+    console.log(config(access))
+    const res = await axios.get(urls.UserInfo, { headers: config(access) })
     return res;
 }
 

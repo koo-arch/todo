@@ -48,12 +48,6 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user.id)
     
-    def list(self, request, *args, **kwargs):
-        if not self.request.user.is_active:
-            return HttpResponseRedirect(redirect_to='http://localhost:3000')
-        return super().list(request, *args, **kwargs)
-    
-
 
 class FinishedViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
