@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 from django.db import transaction
-from django.http import HttpResponse, Http404
+from django.http import HttpResponseRedirect, Http404
 from rest_framework import authentication, permissions, generics
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
@@ -41,12 +41,18 @@ class UserList(generics.ListAPIView):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.AllowAny, )
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user.id)
+    
+    def list(self, request, *args, **kwargs):
+        if not self.request.user.is_active:
+            return HttpResponseRedirect(redirect_to='http://localhost:3000')
+        return super().list(request, *args, **kwargs)
+    
 
 
 class FinishedViewSet(viewsets.ModelViewSet):
