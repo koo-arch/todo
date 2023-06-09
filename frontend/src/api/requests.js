@@ -22,8 +22,13 @@ export const postLogin = async(data) =>  {
     return res;
 }
 
-export const getUserInfo = async(data) => {
-    console.log(config(data))
-    const res = await axios.get(urls.UserInfo, { headers: config(data) })
+export const getUserInfo = async(accsess) => {
+    console.log(config(accsess))
+    const res = await axios.get(urls.UserInfo, { headers: config(accsess) })
+    return res;
+}
+
+export const getTaskList = async(access) => {
+    const res = await axios.get(urls.TaskList, { headers: config(access) })
     return res;
 }

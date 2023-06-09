@@ -26,7 +26,7 @@ class AuthRegister(generics.CreateAPIView):
     
 
 class AuthInfoGetView(viewsets.ModelViewSet):
-    permission_classes = (IsMyselfToRetrieveUpdateDestroy,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -41,7 +41,7 @@ class UserList(generics.ListAPIView):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsMyselfToRetrieveUpdateDestroy, )
+    permission_classes = (permissions.IsAuthenticated, )
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -50,7 +50,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 
 
 class FinishedViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsMyselfToRetrieveUpdateDestroy, )
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Finished.objects.all()
     serializer_class = FinishedSerializer
 
