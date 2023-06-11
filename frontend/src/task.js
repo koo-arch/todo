@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { getTaskList } from './api/requests';
+import TaskDetail from './taskDetail';
 
-const task = (props) => {
+const Task = (props) => {
     const accesstoken = props.token
     console.log(accesstoken)
-    getTaskList(accesstoken)
-        .then(function(response) {
-            console.log(response.data)
-        })
-        .catch(err => {
-            console.log("miss")
-        })
+
+    const initialState = {
+        id: '',
+        task_name: '',
+        text: '',
+    }
+
+    const [taskList, setTaskList] = useState(initialState);
+
+    useEffect(() => {
+        getTaskList(accesstoken)
+            .then(res => {
+                setTaskList(res.data);
+                console.log(res);
+            })
+            .catch(err => {
+                console.log("miss")
+            })
+    },[])
 
   return (
-    <div>task</div>
+    <div>
+        {Object.values(taskList).map(res => <TaskDetail {...res}/>)}
+    </div>
   );
 };
 
-export default task;
+export default Task;
