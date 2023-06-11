@@ -14,7 +14,7 @@ const todo = () => {
   return (
     <div>
       <Logout />
-      <Task/>
+      <Task token={token}/>
     </div>
   );
 };

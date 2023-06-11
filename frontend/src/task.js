@@ -1,11 +1,9 @@
 import React from 'react';
 import { getTaskList } from './api/requests';
-import Cookies from 'universal-cookie';
 
-const task = () => {
-    const cookie = new Cookies;
-    const accesstoken = cookie.get('accesstoken');
-
+const task = (props) => {
+    const accesstoken = props.token
+    console.log(accesstoken)
     getTaskList(accesstoken)
         .then(function(response) {
             console.log(response.data)

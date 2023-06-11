@@ -8,10 +8,10 @@ import { config } from "./api/requests.js";
 const top = () => {
     const cookie = new Cookies();
     const token = cookie.get('accesstoken')
-    console.log(cookie.get('accesstoken'))
-    console.log(config(token))
 
-    Redirect(token);
+    if (token != null) {
+        Redirect(token);
+    }
     return (
         <>
             <Login/>
