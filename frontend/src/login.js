@@ -7,7 +7,7 @@ import { postLogin } from './api/requests.js';
 const Login = (props) => {
     const navigation = useNavigate();
 
-    const [cookies, setCookie] = useCookies();
+    const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, errors } = useForm();
 
     const getJwt = (data) => {

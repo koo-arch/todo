@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { getTaskList } from './api/requests';
 import TaskDetail from './taskDetail';
 
 const Task = (props) => {
-    const accesstoken = props.token
-    console.log(accesstoken)
-
     const initialState = {
         id: '',
         task_name: '',
@@ -13,9 +11,10 @@ const Task = (props) => {
     }
 
     const [taskList, setTaskList] = useState(initialState);
+    const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken'])
 
     useEffect(() => {
-        getTaskList(accesstoken)
+        getTaskList(cookies.accesstoken)
             .then(res => {
                 setTaskList(res.data);
                 console.log(res);
