@@ -1,10 +1,8 @@
-import Cookies from 'universal-cookie';
 import axios from './axios.js';
 import urls from './urls.js';
 
-const cookies = new Cookies();
 
-export const config = (cookie) => {
+const config = (cookie) => {
     const headers = {
         'Content-Type': 'Application/json',
         'Authorization': `JWT ${cookie}`
@@ -14,6 +12,16 @@ export const config = (cookie) => {
 
 export const postLogin = async(data) =>  {
     const res = await axios.post(urls.Login, 
+        {
+            email: data.email,
+            password: data.password,
+        },
+    )
+    return res;
+}
+
+export const postRegister = async(data) => {
+    const res = await axios.post(urls.Register,
         {
             email: data.email,
             password: data.password,

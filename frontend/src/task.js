@@ -20,7 +20,7 @@ const Task = (props) => {
                 console.log(res);
             })
             .catch(err => {
-                console.log("miss")
+                console.log(err.response)
             })
     },[])
 

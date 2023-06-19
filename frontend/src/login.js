@@ -7,6 +7,7 @@ import { postLogin } from './api/requests.js';
 const Login = (props) => {
     const navigation = useNavigate();
 
+    const [movie, setMoive] = useState([]);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, errors } = useForm();
 
@@ -20,9 +21,8 @@ const Login = (props) => {
             navigation('/todo');
         })
         .catch(err => {
-            console.log("miss")
-            alert("Emailかパスワードが違います");
-            throw new Error(err);
+            console.log(err.response.data)
+            setMoive(err.response.data)
         });
     };
     return (
@@ -37,6 +37,7 @@ const Login = (props) => {
                     <label for="password">PassWord：</label>
                     <input className='form-control' type="password" {...register('password', { required: true })} />
                     <input className='btn btn-secondary' type="submit" value="ログイン" />
+                    {movie.detail}
                 </form>
             </div>
         </div>
