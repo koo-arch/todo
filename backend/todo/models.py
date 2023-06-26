@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import PermissionsMixin
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -104,7 +105,7 @@ class Task(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     task_name = models.CharField(max_length=200)
     text = models.CharField(max_length=500)
-    date = models.DateTimeField("date_published")
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.task_name} {self.text}"
@@ -114,7 +115,7 @@ class Finished(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     finish_task = models.CharField(max_length=200)
     text = models.CharField(max_length=500)
-    date = models.DateTimeField("date_published")
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.finish_task} {self.text}"

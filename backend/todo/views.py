@@ -41,7 +41,7 @@ class UserList(generics.ListAPIView):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.IsAuthenticated, )
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 

@@ -17,6 +17,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Task
         fields = (

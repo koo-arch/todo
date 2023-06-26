@@ -40,3 +40,15 @@ export const getTaskList = async(access) => {
     const res = await axios.get(urls.TaskList, { headers: config(access) })
     return res;
 }
+
+export const postNewTask = async(data, access) => {
+    const res = await axios.post(urls.TaskList,
+        {
+            task_name: data.task_name,
+            text: data.text,
+            date: data.date,
+        },
+        { headers: config(access) },
+    )
+    return res;
+}
