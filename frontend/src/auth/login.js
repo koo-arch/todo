@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { postLogin } from './api/requests.js';
+import { postLogin } from '../api/requests.js';
 
 const Login = (props) => {
     const navigation = useNavigate();

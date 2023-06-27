@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Top from './top.js';
-import Register from './register.js';
+import Register from './auth/register.js';
 import Todo from './todo.js';
 
 const App = () => {

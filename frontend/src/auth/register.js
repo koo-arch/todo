@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { postRegister } from "./api/requests";
+import { postRegister } from "../api/requests";
 
 const Register = () => {
     const navigation = useNavigate();

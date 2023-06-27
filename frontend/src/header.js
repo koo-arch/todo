@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
-import Logout from './logout';
+import Logout from './auth/logout';
 import { getUserInfo } from './api/requests';
 
 const Header = () => {
