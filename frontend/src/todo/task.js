@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { getTaskList } from './api/requests';
+import { getTaskList } from '../api/requests';
 import TaskDetail from './taskDetail';
 import CreateTask from './createTask';
 

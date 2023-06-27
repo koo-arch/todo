@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Top from './top.js';
 import Register from './auth/register.js';
-import Todo from './todo.js';
+import Todo from './todo/todo.js';
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { postNewTask } from './api/requests';
+import { postNewTask } from '../api/requests';
 
 const CreateTask = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
