@@ -52,3 +52,15 @@ export const postNewTask = async(data, access) => {
     )
     return res;
 }
+
+export const putTask = async(data, access) => {
+    const res = await axios.put(urls.TaskList + `${data.id}/`,
+        {
+            task_name: data.task_name,
+            text: data.text,
+            date: data.date,
+        },
+        { headers: config(access) },
+    )
+    return res;
+}

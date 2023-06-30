@@ -29,7 +29,7 @@ const Task = (props) => {
   return (
     <div>
         <CreateTask/>
-        {Object.values(taskList).map(res => <TaskDetail {...res}/>)}
+        {Object.values(taskList).map((task, index) => <TaskDetail {...task} key={index}/>)}
     </div>
   );
 };
