@@ -1,15 +1,30 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { postNewTask } from '../api/requests';
+import { requestAPI, requestData } from '../api/requests';
+import urls from '../api/urls';
 
 const CreateTask = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, errors } = useForm();
 
+    const postNewTask = (data) => {
+        const requestJson = new requestData(data);
+
+        const param = {
+            data: data,
+            request: requestJson.task(),
+            accesstoken: cookies.accesstoken,
+            url: urls.TaskList
+        }
+
+        const request = new requestAPI(param);
+        return request.post()
+    }
+
     const onSubmit  = (data) => {
         console.log(data)
-        postNewTask(data, cookies.accesstoken)
+        postNewTask(data)
             .then(res => {
                 console.log(res)
                 console.log('新規タスク登録');

@@ -1,66 +1,72 @@
-import axios from './axios.js';
-import urls from './urls.js';
+import axios from './axios';
 
 
-const config = (cookie) => {
-    const headers = {
-        'Content-Type': 'Application/json',
-        'Authorization': `JWT ${cookie}`
+export class requestData {
+    constructor(data) {
+        this.data = data
     }
-    return headers;
+
+    auth() {
+        return {
+            email: this.data.email,
+            password: this.data.password
+        }
+    }
+
+    task() {
+        return {
+            task_name: this.data.task_name,
+            text: this.data.text,
+            date: this.data.date
+        }
+    }
 }
 
-export const postLogin = async(data) =>  {
-    const res = await axios.post(urls.Login, 
-        {
-            email: data.email,
-            password: data.password,
-        },
-    )
-    return res;
-}
 
-export const postRegister = async(data) => {
-    const res = await axios.post(urls.Register,
-        {
-            email: data.email,
-            password: data.password,
-        },
-    )
-    return res;
-}
+export class requestAPI {
+    constructor(props) {
+        this.data = props.data;
+        this.request = props.request;
+        this.accesstoken = props.accesstoken;
+        this.url = props.url;
+    }
 
-export const getUserInfo = async(access) => {
-    console.log(config(access))
-    const res = await axios.get(urls.UserInfo, { headers: config(access) })
-    return res;
-}
+    headers() {
+        return {
+            'Content-Type': 'Application/json',
+            'Authorization': `JWT ${this.accesstoken}`,
+        }
+    }
 
-export const getTaskList = async(access) => {
-    const res = await axios.get(urls.TaskList, { headers: config(access) })
-    return res;
-}
+    async get() {
+        if (this.accesstoken === undefined) {
+            return await axios.get(this.url)
+        } else {
+            return await axios.get(this.url, { headers: this.headers() })
+        }
+    }
 
-export const postNewTask = async(data, access) => {
-    const res = await axios.post(urls.TaskList,
-        {
-            task_name: data.task_name,
-            text: data.text,
-            date: data.date,
-        },
-        { headers: config(access) },
-    )
-    return res;
-}
+    async post() {
+        if (this.accesstoken === undefined) {
+            return await axios.post(this.url, this.request)
+        } else {
+            return await axios.post(this.url, this.request, { headers: this.headers() })
+        }
+    }
 
-export const putTask = async(data, access) => {
-    const res = await axios.put(urls.TaskList + `${data.id}/`,
-        {
-            task_name: data.task_name,
-            text: data.text,
-            date: data.date,
-        },
-        { headers: config(access) },
-    )
-    return res;
+    async put() {
+        if (this.accesstoken === undefined) {
+            return await axios.put(this.url + `${this.data.id}/`, this.request)
+        } else {
+            return await axios.put(this.url + `${this.data.id}/`, this.request, { headers: this.headers() })
+        }
+    }
+
+    async delete() {
+        if (this.accesstoken === undefined) {
+            return await axios.delete(this.url + `${this.data.id}/`)
+        } else {
+            return await axios.delete(this.url + `${this.data.id}/`, { headers: this.headers() })
+        }
+    }
 }

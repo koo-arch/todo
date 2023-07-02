@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
-import { putTask } from '../api/requests';
+import { requestAPI, requestData } from '../api/requests';
+import urls from '../api/urls';
 
 Modal.setAppElement("#root");
 
@@ -19,8 +20,22 @@ const TaskDetail = (task) => {
     setModalIsOpen(false);
   }
 
+  const putTask = (data) => {
+    const requestJson = new requestData(data);
+
+        const param = {
+            data: data,
+            request: requestJson.task(),
+            accesstoken: cookies.accesstoken,
+            url: urls.TaskList
+        }
+
+        const request = new requestAPI(param);
+        return request.put()
+  }
+
   const onSubmit = (data) => {
-    putTask(data, cookies.accesstoken)
+    putTask(data)
       .then(res => {
         console.log(res)
         console.log('変更完了')

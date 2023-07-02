@@ -3,29 +3,39 @@ import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { postRegister } from "../api/requests";
+import { requestAPI, requestData } from "../api/requests";
+import urls from "../api/urls";
 
 const Register = () => {
     const navigation = useNavigate();
     const [movie, setMoive] = useState([]);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [cookie, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, getValues, errors } = useForm();
 
-    const postData = (data) => {
-        console.log(data)
+    const postRegister = (data) => {
+        const requestJson = new requestData(data);
+
+        const param = {
+            data: data,
+            request: requestJson.auth(),
+            url: urls.Register
+        }
+
+        const request = new requestAPI(param);
+        return request.post();
+    }
+    
+    const onSubmit = (data) => {
         postRegister(data)
-        .then(function(response) {
-            console.log(response.data)
-            alert('登録が完了しました');
-            navigation('/');
-        })
-        .catch(err => {
-            console.log(err.response.data);
-            setMoive(err.response.data)
-        });
+            .then(function(response) {
+                console.log(response.data)
+                alert('登録が完了しました');
+                navigation('/');
+            })
+            .catch(err => {
+                console.log(err.response.data);
+                setMoive(err.response.data)
+            });
     };
     return(
         <div className="top-wrapper">
@@ -33,7 +43,7 @@ const Register = () => {
                 <h3>Register</h3>
             </div>
             <div class="login-block">
-                <form onSubmit={handleSubmit(postData)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <label for="email">Email：</label>
                     <input className='form-control' {...register('email')} />
                     <label for="password">PassWord：</label>

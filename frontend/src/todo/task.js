@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { getTaskList } from '../api/requests';
 import TaskDetail from './taskDetail';
 import CreateTask from './createTask';
+import { requestAPI, requestData } from '../api/requests';
+import urls from '../api/urls';
 
 const Task = (props) => {
     const initialState = {
@@ -15,8 +16,20 @@ const Task = (props) => {
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken'])
 
+    const getTaskList = () => {
+        const param = {
+            accesstoken: cookies.accesstoken,
+            url: urls.TaskList
+        }
+    
+        const request = new requestAPI(param)
+        return request.get()
+
+    }
+
+
     useEffect(() => {
-        getTaskList(cookies.accesstoken)
+        getTaskList()
             .then(res => {
                 setTaskList(res.data);
                 console.log(res);
