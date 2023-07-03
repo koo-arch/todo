@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import TaskDetail from './taskDetail';
 import CreateTask from './createTask';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
+import { PostFlag } from './task';
 
 const GetTask = (props) => {
     const initialState = {
@@ -14,7 +15,8 @@ const GetTask = (props) => {
     }
 
     const [taskList, setTaskList] = useState(initialState);
-    const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken'])
+    const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
+    const { postFlag, setPostFlag } = useContext(PostFlag);
 
     const getTaskList = () => {
         const param = {
@@ -37,11 +39,10 @@ const GetTask = (props) => {
             .catch(err => {
                 console.log(err.response)
             })
-    },[])
+    },[postFlag])
 
   return (
     <div>
-        <CreateTask/>
         {Object.values(taskList).map((task, index) => <TaskDetail {...task} key={index}/>)}
     </div>
   );

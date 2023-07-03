@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
+import { PostFlag } from './task';
 
 Modal.setAppElement('#root');
 
@@ -11,6 +12,7 @@ const DeleteTask = (task) => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken'])
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm();
+    const {postFlag, setPostFlag} = useContext(PostFlag);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -39,6 +41,8 @@ const DeleteTask = (task) => {
             .then(res => {
                 console.log(res)
                 console.log('削除完了')
+                setPostFlag(!postFlag);
+                closeModal();
             })
             .catch(err => {
                 console.log(err.response)
@@ -56,7 +60,7 @@ const DeleteTask = (task) => {
                     <p>この項目を削除してよろしいですか？</p>
                     <p>タスク名：{task.task_name} 日付：{task.date}</p>
                     <input type="button" value="キャンセル" onClick={() => { closeModal() }}/>
-                    <input type="submit" value="更新" />
+                    <input type="submit" value="削除"/>
                 </form>
             </Modal>
         </div>

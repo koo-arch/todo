@@ -38,17 +38,17 @@ const Login = (props) => {
             });
     };
     return (
-        <div className="top-wrapper">
-            <div class="login">
+        <div>
+            <div>
                 <h3>Login</h3>
             </div>
-            <div class="login-block">
+            <div>
                 <form onSubmit={handleSubmit(getJwt)}>
-                    <label for="email">Email：</label>
+                    <label>Email：</label>
                     <input className='form-control' {...register('email')} />
-                    <label for="password">PassWord：</label>
-                    <input className='form-control' type="password" {...register('password', { required: true })} />
-                    <input className='btn btn-secondary' type="submit" value="ログイン" />
+                    <label>PassWord：</label>
+                    <input type="password" {...register('password', { required: true })} />
+                    <input type="submit" value="ログイン"/>
                     {movie.detail}
                 </form>
             </div>

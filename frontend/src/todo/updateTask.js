@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
+import { PostFlag } from './task';
 
 Modal.setAppElement("#root");
 
@@ -11,6 +12,7 @@ const UpdateTask = (task) => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken'])
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm();
+    const {postFlag, setPostFlag} = useContext(PostFlag);
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -39,6 +41,8 @@ const UpdateTask = (task) => {
             .then(res => {
                 console.log(res)
                 console.log('変更完了')
+                setPostFlag(!postFlag);
+                closeModal();
             })
             .catch(err => {
                 console.log(err.response)

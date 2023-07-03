@@ -27,36 +27,36 @@ const Register = () => {
     
     const onSubmit = (data) => {
         postRegister(data)
-            .then(function(response) {
-                console.log(response.data)
+            .then(res =>  {
+                console.log(res.data)
                 alert('登録が完了しました');
                 navigation('/');
             })
             .catch(err => {
-                console.log(err.response.data);
-                setMoive(err.response.data)
+                console.log(err.res.data);
+                setMoive(err.res.data)
             });
     };
     return(
-        <div className="top-wrapper">
-            <div class="login">
+        <div>
+            <div>
                 <h3>Register</h3>
             </div>
-            <div class="login-block">
+            <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <label for="email">Email：</label>
-                    <input className='form-control' {...register('email')} />
-                    <label for="password">PassWord：</label>
-                    <input className='form-control' type="password" {...register('password', { required: true })} />
-                    <label for="password">PassWord（再入力）：</label>
-                    <input className='form-control' type="password" {...register('password_confirmation', { 
+                    <label>Email：</label>
+                    <input {...register('email')} />
+                    <label>PassWord：</label>
+                    <input type="password" {...register('password', { required: true })} />
+                    <label>PassWord（再入力）：</label>
+                    <input type="password" {...register('password_confirmation', { 
                         required: "パスワードを再入力してください" ,
                         validate: (value) => {
                             return(
                                 value === getValues("password") || "パスワードが一致しません"
                             )
                         }})} />
-                    <input className='btn btn-secondary' type="submit" value="登録" />
+                    <input type="submit" value="登録" />
                 </form>
             </div>
         </div>

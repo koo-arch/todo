@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
+import GetTask from './getTask';
+import { PostFlag } from './task';
 
 const CreateTask = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, errors } = useForm();
+    const { postFlag, setPostFlag } = useContext(PostFlag);
 
     const postNewTask = (data) => {
         const requestJson = new requestData(data);
@@ -29,6 +32,7 @@ const CreateTask = () => {
                 console.log(res)
                 console.log('新規タスク登録');
                 alert('タスク登録完了');
+                setPostFlag(!postFlag);
             })
             .catch(err => {
                 console.log(err.response);
@@ -45,6 +49,7 @@ const CreateTask = () => {
                 <input type="submit" value="追加"/>
             </form>
         </div>
+        <GetTask/>
     </div>
     )
 }
