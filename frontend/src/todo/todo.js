@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Task from './task';
+import Task from './getTask';
 import Header from './header';
 
 const todo = () => {

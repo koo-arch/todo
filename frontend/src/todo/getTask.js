@@ -5,7 +5,7 @@ import CreateTask from './createTask';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 
-const Task = (props) => {
+const GetTask = (props) => {
     const initialState = {
         id: '',
         task_name: '',
@@ -47,4 +47,4 @@ const Task = (props) => {
   );
 };
 
-export default Task;
+export default GetTask;
