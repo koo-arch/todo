@@ -10,7 +10,7 @@ const Top = () => {
                 <CssBaseline/>
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 14,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -38,7 +38,6 @@ const Top = () => {
                         ログイン
                     </Button>
                 </Box>
-
             </Container>
         </ThemeProvider>
     );
