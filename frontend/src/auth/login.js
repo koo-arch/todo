@@ -22,9 +22,9 @@ const Login = (props) => {
     const defaultTheme = createTheme();
     const navigation = useNavigate();
 
-    const [movie, setMoive] = useState([]);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, clearErrors, setError, formState: { errors } } = useForm();
+
 
     const postLogin = (data) => {
         const requestJson = new requestData(data);
@@ -39,7 +39,9 @@ const Login = (props) => {
         return request.post();
     }
 
+
     const getJwt = (data) => {
+        clearErrors();
         postLogin(data)
             .then(res => {
                 setCookie('accesstoken', res.data.access, { path: '/' }, { httpOnly: true })
@@ -47,8 +49,15 @@ const Login = (props) => {
                 navigation('/todo');
             })
             .catch(err => {
-                console.log(err.response.data)
-                setMoive(err.response.data)
+                const errRes = err.response.data
+                if (errRes.detail === undefined) {
+                    Object.keys(errRes).map((key) => {
+                        setError(`${key}`, { type: "validate", message: errRes[`${key}`]})
+                    })
+                } else {
+                    setError('email', { type: "validate", message: "メールアドレスかパスワードが違います" })
+                    setError('password', { type: "validate", message: "メールアドレスかパスワードが違います" })
+                }
             });
     };
     return (
@@ -72,19 +81,23 @@ const Login = (props) => {
                     <Box component="form" onSubmit={handleSubmit(getJwt)} sx={{ mt: 1 }}>
                         <TextField
                             required
+                            error={!!errors.email}
                             margin='normal'
                             fullWidth
                             label="メールアドレス"
                             type="email"
-                            {...register('email')}
+                            helperText={!!errors.email && errors.email.message}
+                            {...register('email', {required: "メールアドレスを入力してください"})}
                         />
                         <TextField
                             required
+                            error={!!errors.password}
                             margin='normal'
                             fullWidth
                             label="パスワード"
                             type="password"
-                            {...register('password')}/>
+                            helperText={!!errors.password && errors.password.message}
+                            {...register('password', { required: "パスワードを入力してください"})}/>
                         <Button
                             variant="contained"
                             fullWidth
@@ -94,7 +107,6 @@ const Login = (props) => {
                             ログイン
                         </Button>
                     </Box>
-                    {movie.detail}
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
