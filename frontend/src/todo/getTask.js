@@ -10,8 +10,10 @@ const GetTask = (props) => {
     const initialState = {
         id: '',
         task_name: '',
-        text: '',
-        date: '',
+        comment: '',
+        created_at: '',
+        updated_at: '',
+        deadline: '',
     }
 
     const [taskList, setTaskList] = useState(initialState);

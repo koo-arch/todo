@@ -58,7 +58,7 @@ const DeleteTask = (task) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input type="hidden" value={task.id} {...register('id')} />
                     <p>この項目を削除してよろしいですか？</p>
-                    <p>タスク名：{task.task_name} 日付：{task.date}</p>
+                    <p>タスク名：{task.task_name} 期限：{task.deadline}</p>
                     <input type="button" value="キャンセル" onClick={() => { closeModal() }}/>
                     <input type="submit" value="削除"/>
                 </form>

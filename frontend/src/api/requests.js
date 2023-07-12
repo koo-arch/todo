@@ -16,8 +16,8 @@ export class requestData {
     task() {
         return {
             task_name: this.data.task_name,
-            text: this.data.text,
-            date: this.data.date
+            comment: this.data.comment,
+            deadline: this.data.deadline,
         }
     }
 }

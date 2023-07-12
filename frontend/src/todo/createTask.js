@@ -45,7 +45,9 @@ const CreateTask = () => {
                 <label>タスク</label>
                 <input {...register('task_name')}/>
                 <label>詳細</label>
-                <input {...register('text')}/>
+                <input {...register('comment')}/>
+                <label>締切</label>
+                <input type="datetime-local" {...register('deadline')}/>
                 <input type="submit" value="追加"/>
             </form>
         </div>

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserManager, CustomUser, Task, Finished
+from .models import UserManager, CustomUser, Task
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -17,26 +17,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
+    deadline = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
+    user_id = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Task
         fields = (
             "id",
-            "user",
+            "user_id",
             "task_name",
-            "text",
-            "date"
-        )
-
-
-class FinishedSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Finished
-        fields = (
-            "id",
-            "user",
-            "finish_task",
-            "text",
-            "date",
+            "comment",
+            "created_at",
+            "updated_at",
+            "deadline",
+            "is_finished",
         )

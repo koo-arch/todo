@@ -60,7 +60,9 @@ const UpdateTask = (task) => {
                     <label>タスク名</label>
                     <input type="text" defaultValue={task.task_name} {...register('task_name')} />
                     <label>コメント</label>
-                    <input type="text" defaultValue={task.text} {...register('text')} />
+                    <input type="text" defaultValue={task.comment} {...register('comment')} />
+                    <label>期限</label>
+                    <input type="datetime-local" defaultValue={task.deadline} {...register('deadline')} />
                     <input type="submit" value="更新" />
                 </form>
             </Modal>

@@ -9,7 +9,7 @@ const TaskDetail = (task) => {
   return (
     <div>
         <li>
-            {task.id}: {task.task_name}, {task.text}, {task.date}
+            {task.id}: {task.task_name}, {task.comment}, {task.created_at}, {task.updated_at}
         </li>
         <UpdateTask {...task}/>
         <DeleteTask {...task}/>
