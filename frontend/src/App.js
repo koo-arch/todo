@@ -6,13 +6,17 @@ import Login from './auth/login';
 import Register from './auth/register';
 import Todo from './todo/todo';
 import NotFound from './notFound';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const App = () => {
+  const defaultTheme = createTheme();
   const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
   const cookiesLength = Object.values(cookies).length
   console.log(cookiesLength)
   return(
-    <>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline/>
       <BrowserRouter>
         <>
           <Routes>
@@ -24,7 +28,7 @@ const App = () => {
           </Routes>
         </>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   )
 }
 

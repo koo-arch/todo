@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { Box, MenuItem } from '@mui/material';
 
 const Logout = (props) => {
     const navigation = useNavigate();
@@ -14,9 +15,9 @@ const Logout = (props) => {
         console.log(cookies);
     }
     return (
-        <div>
-            <button onClick={removeJWT}>ログアウト</button>
-        </div>
+        <>
+            <MenuItem {...props} onClick={removeJWT}>ログアウト</MenuItem>
+        </>
     )
 }
 
