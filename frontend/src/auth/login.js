@@ -46,7 +46,7 @@ const Login = (props) => {
             .then(res => {
                 setCookie('accesstoken', res.data.access, { path: '/' }, { httpOnly: true })
                 setCookie('refreshtoken', res.data.refresh, { path: '/' }, { httpOnly: true })
-                navigation('/todo');
+                navigation('/task');
             })
             .catch(err => {
                 const errRes = err.response.data

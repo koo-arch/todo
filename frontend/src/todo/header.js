@@ -23,7 +23,7 @@ const Header = () => {
     email: '',
   }
 
-  const [userInfo, setUserInfo] = useState(initialState)
+  const [userInfo, setUserInfo] = useState(initialState);
   const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
 
   const [anchorEl, setAnchorEl] = useState(null);

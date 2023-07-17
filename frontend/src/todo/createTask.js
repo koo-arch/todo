@@ -3,7 +3,6 @@ import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import GetTask from './getTask';
 import { PostFlag } from './task';
 
 const CreateTask = () => {
@@ -51,7 +50,6 @@ const CreateTask = () => {
                 <input type="submit" value="追加"/>
             </form>
         </div>
-        <GetTask/>
     </div>
     )
 }
