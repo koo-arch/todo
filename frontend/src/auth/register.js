@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
+import useAuthAxios from "./useAuthAxios";
 import { 
     Button,
     Box,
@@ -24,6 +25,7 @@ const Register = () => {
     const [cookie, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, getValues, clearErrors, setError, formState: { errors }, } = useForm();
     const defaultTheme = createTheme();
+    const axios = useAuthAxios();
 
 
     const postRegister = (data) => {
@@ -36,7 +38,7 @@ const Register = () => {
         }
 
         const request = new requestAPI(param);
-        return request.post();
+        return request.post(axios);
     }
 
     

@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
+import useAuthAxios from '../auth/useAuthAxios';
 
 const CreateTask = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, watch, errors } = useForm();
     const { postFlag, setPostFlag } = useContext(PostFlag);
+    const axios = useAuthAxios();
 
     const postNewTask = (data) => {
         const requestJson = new requestData(data);
@@ -21,7 +23,7 @@ const CreateTask = () => {
         }
 
         const request = new requestAPI(param);
-        return request.post()
+        return request.post(axios)
     }
 
     const onSubmit  = (data) => {

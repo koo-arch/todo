@@ -1,6 +1,3 @@
-import axios from './axios';
-
-
 export class requestData {
     constructor(data) {
         this.data = data
@@ -38,7 +35,7 @@ export class requestAPI {
         }
     }
 
-    async get() {
+    async get(axios) {
         if (this.accesstoken === undefined) {
             return await axios.get(this.url)
         } else {
@@ -46,7 +43,7 @@ export class requestAPI {
         }
     }
 
-    async post() {
+    async post(axios) {
         if (this.accesstoken === undefined) {
             return await axios.post(this.url, this.request)
         } else {
@@ -54,7 +51,7 @@ export class requestAPI {
         }
     }
 
-    async put() {
+    async put(axios) {
         if (this.accesstoken === undefined) {
             return await axios.put(this.url + `${this.data.id}/`, this.request)
         } else {
@@ -62,7 +59,7 @@ export class requestAPI {
         }
     }
 
-    async delete() {
+    async delete(axios) {
         if (this.accesstoken === undefined) {
             return await axios.delete(this.url + `${this.data.id}/`)
         } else {

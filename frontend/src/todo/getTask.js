@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import TaskDetail from './taskDetail';
-import CreateTask from './createTask';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
+import useAuthAxios from '../auth/useAuthAxios';
 
 const GetTask = (props) => {
     const initialState = {
@@ -19,6 +19,7 @@ const GetTask = (props) => {
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { postFlag, setPostFlag } = useContext(PostFlag);
+    const axios = useAuthAxios();
 
     const getTaskList = () => {
         const param = {
@@ -27,7 +28,7 @@ const GetTask = (props) => {
         }
     
         const request = new requestAPI(param)
-        return request.get()
+        return request.get(axios)
 
     }
 

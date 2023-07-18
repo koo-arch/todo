@@ -5,14 +5,16 @@ import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
+import useAuthAxios from '../auth/useAuthAxios';
 
 Modal.setAppElement("#root");
 
 const UpdateTask = (task) => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken'])
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit } = useForm();
     const {postFlag, setPostFlag} = useContext(PostFlag);
+    const axios = useAuthAxios();
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -33,7 +35,7 @@ const UpdateTask = (task) => {
         }
 
         const request = new requestAPI(param);
-        return request.put()
+        return request.put(axios);
     }
 
     const onSubmit = (data) => {
