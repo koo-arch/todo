@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import axios from '../api/axios';
 import useRefreshToken from './useRefreshToken';
 
-const useAuthAxios = () => {
+const useCustomAxios = () => {
     const refresh = useRefreshToken();
 
     useEffect(() => {
@@ -29,4 +29,4 @@ const useAuthAxios = () => {
     return axios;
 }
 
-export default useAuthAxios;
+export default useCustomAxios;

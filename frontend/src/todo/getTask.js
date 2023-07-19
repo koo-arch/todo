@@ -4,7 +4,7 @@ import TaskDetail from './taskDetail';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
-import useAuthAxios from '../hooks/useAuthAxios';
+import useCustomAxios from '../hooks/useCustomAxios';
 
 const GetTask = (props) => {
     const initialState = {
@@ -19,7 +19,7 @@ const GetTask = (props) => {
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { postFlag, setPostFlag } = useContext(PostFlag);
-    const axios = useAuthAxios();
+    const customAxios = useCustomAxios();
 
     const getTaskList = () => {
         const param = {
@@ -28,7 +28,7 @@ const GetTask = (props) => {
         }
     
         const request = new requestAPI(param)
-        return request.get(axios)
+        return request.get(customAxios)
 
     }
 

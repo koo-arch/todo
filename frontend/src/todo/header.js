@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import useLogout from '../hooks/useLogout';
 import { requestAPI } from '../api/requests';
 import urls from '../api/urls';
-import useAuthAxios from '../hooks/useAuthAxios';
+import useCustomAxios from '../hooks/useCustomAxios';
 import {
   AppBar,
   Button,
@@ -27,7 +27,7 @@ const Header = () => {
   const [userInfo, setUserInfo] = useState(initialState);
   const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
   const logout = useLogout();
-  const axios = useAuthAxios();
+  const customAxios = useCustomAxios();
   const [anchorEl, setAnchorEl] = useState(null);
 
 
@@ -46,7 +46,7 @@ const Header = () => {
     }
   
     const request = new requestAPI(param);
-    return request.get(axios);
+    return request.get(customAxios);
   }
 
 

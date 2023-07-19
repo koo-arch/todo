@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import useAuthAxios from '../hooks/useAuthAxios';
+import useCustomAxios from '../hooks/useCustomAxios';
 import { 
     Button, 
     Box, 
@@ -25,7 +25,7 @@ const Login = (props) => {
 
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, clearErrors, setError, formState: { errors } } = useForm();
-    const axios = useAuthAxios();
+    const customAxios = useCustomAxios();
 
     const postLogin = (data) => {
         const requestJson = new requestData(data);
@@ -37,7 +37,7 @@ const Login = (props) => {
         }
     
         const request = new requestAPI(param);
-        return request.post(axios);
+        return request.post(customAxios);
     }
 
 
