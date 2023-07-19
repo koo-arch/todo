@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
-import useAuthAxios from "./useAuthAxios";
+import useAuthAxios from "../hooks/useAuthAxios";
 import { 
     Button,
     Box,

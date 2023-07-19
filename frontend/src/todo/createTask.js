@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
-import useAuthAxios from '../auth/useAuthAxios';
+import useAuthAxios from '../hooks/useAuthAxios';
 
 const CreateTask = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);

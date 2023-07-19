@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from 'react';
 import { useCookies } from 'react-cookie';
-import useLogout from '../auth/useLogout';
+import useLogout from '../hooks/useLogout';
 import { requestAPI } from '../api/requests';
 import urls from '../api/urls';
-import useAuthAxios from '../auth/useAuthAxios';
+import useAuthAxios from '../hooks/useAuthAxios';
 import {
   AppBar,
   Button,

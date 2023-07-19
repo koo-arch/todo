@@ -4,7 +4,7 @@ import TaskDetail from './taskDetail';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
-import useAuthAxios from '../auth/useAuthAxios';
+import useAuthAxios from '../hooks/useAuthAxios';
 
 const GetTask = (props) => {
     const initialState = {
