@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { useCookies } from 'react-cookie';
-import Logout from '../auth/logout';
+import useLogout from '../auth/useLogout';
 import { requestAPI } from '../api/requests';
 import urls from '../api/urls';
 import useAuthAxios from '../auth/useAuthAxios';
@@ -26,6 +26,7 @@ const Header = () => {
 
   const [userInfo, setUserInfo] = useState(initialState);
   const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
+  const logout = useLogout();
   const axios = useAuthAxios();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -104,7 +105,13 @@ const Header = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <Logout onClick={handleClose}/>
+              <MenuItem onClick={() => {
+                handleClose();
+                logout();
+                }}
+              >
+                ログアウト
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
