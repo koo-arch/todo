@@ -4,9 +4,9 @@ import TaskDetail from './taskDetail';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { PostFlag } from './task';
-import useCustomAxios from '../hooks/useCustomAxios';
+import Loading from './loading';
 
-const GetTask = (props) => {
+const GetTask = () => {
     const initialState = {
         id: '',
         task_name: '',
@@ -19,7 +19,8 @@ const GetTask = (props) => {
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { postFlag, setPostFlag } = useContext(PostFlag);
-    const customAxios = useCustomAxios();
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     const getTaskList = () => {
         const param = {
@@ -28,12 +29,12 @@ const GetTask = (props) => {
         }
     
         const request = new requestAPI(param)
-        return request.get(customAxios)
-
+        return request.get()
     }
 
 
     useEffect(() => {
+        setIsLoading(true);
         getTaskList()
             .then(res => {
                 setTaskList(res.data);
@@ -42,10 +43,14 @@ const GetTask = (props) => {
             .catch(err => {
                 console.log(err.response)
             })
+            .then(() => {
+                setIsLoading(false);
+            })
     },[postFlag])
 
   return (
     <div>
+        <Loading open={isLoading}/>
         {Object.values(taskList).map((task, index) => <TaskDetail {...task} key={index}/>)}
     </div>
   );

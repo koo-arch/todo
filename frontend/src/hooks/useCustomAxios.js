@@ -13,6 +13,9 @@ const useCustomAxios = () => {
                 if (error?.response?.status === 403 && !prevRequest.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
+                    if (newAccessToken === undefined) {
+                        return Promise.reject(error);
+                    }
                     console.log(newAccessToken);
                     prevRequest.headers["Authorization"] = `JWT ${newAccessToken}`;
                     return axios(prevRequest);
@@ -24,7 +27,7 @@ const useCustomAxios = () => {
         return () => {
             axios.interceptors.response.eject(responseIntercept);
         };
-    },[refresh])
+    },[])
 
     return axios;
 }

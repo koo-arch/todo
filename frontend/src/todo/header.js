@@ -46,7 +46,7 @@ const Header = () => {
     }
   
     const request = new requestAPI(param);
-    return request.get(customAxios);
+    return request.get();
   }
 
 

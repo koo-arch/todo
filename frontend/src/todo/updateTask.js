@@ -14,7 +14,7 @@ const UpdateTask = (task) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { register, handleSubmit } = useForm();
     const {postFlag, setPostFlag} = useContext(PostFlag);
-    const axios = useCustomAxios();
+
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -35,7 +35,7 @@ const UpdateTask = (task) => {
         }
 
         const request = new requestAPI(param);
-        return request.put(axios);
+        return request.put();
     }
 
     const onSubmit = (data) => {

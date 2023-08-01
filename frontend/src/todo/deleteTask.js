@@ -14,8 +14,7 @@ const DeleteTask = (task) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { register, handleSubmit } = useForm();
     const {postFlag, setPostFlag} = useContext(PostFlag);
-    const customAxios = useCustomAxios();
-
+    
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -36,7 +35,7 @@ const DeleteTask = (task) => {
         }
 
         const request = new requestAPI(param);
-        return request.delete(customAxios)
+        return request.delete()
     }
 
     const onSubmit = (data) => {
