@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import TaskDetail from './taskDetail';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import { PostFlag } from './task';
+import { PostFlag } from '../pages/task';
 import Loading from './loading';
 
 const GetTask = () => {

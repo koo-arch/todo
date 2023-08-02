@@ -1,10 +1,10 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import Top from './top';
-import Login from './auth/login';
-import Register from './auth/register';
-import Task from './todo/task';
+import Top from './pages/top';
+import Login from './pages/login';
+import Register from './pages/register';
+import Task from './pages/task';
 import NotFound from './notFound';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

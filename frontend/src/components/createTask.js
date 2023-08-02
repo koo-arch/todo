@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import CustomModal from './customModal';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import { PostFlag } from './task';
+import { PostFlag } from '../pages/task';
 import { 
     Box,
     Container,

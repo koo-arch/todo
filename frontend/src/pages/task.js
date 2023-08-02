@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
-import Header from './header';
-import CreateTask from './createTask';
-import GetTask from './getTask';
+import Header from '../components/header';
+import CreateTask from '../components/createTask';
+import GetTask from '../components/getTask';
 
 export const PostFlag = createContext(); 
 
