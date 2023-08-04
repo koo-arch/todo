@@ -16,9 +16,10 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DateTimeField from './dateTimeField';
+import '../styles/styles.css';
 
-const CreateTask = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
+const CreateTask = (props) => {
+    const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const { postFlag, setPostFlag } = useContext(PostFlag);
     const openRef = useRef();
@@ -58,7 +59,11 @@ const CreateTask = () => {
     }
     return (
     <div>
-        <Fab color="primary" onClick={openModal}><AddIcon fontSize='large'/></Fab>
+        <div className='fab-container'>
+            <Fab color="primary" onClick={openModal} ref={props.create}>
+                <AddIcon fontSize='large'/>
+            </Fab>
+        </div>
         <CustomModal open={openRef} close={closeRef}>
             <Container component={"div"} maxWidth="xs">
                 <Box

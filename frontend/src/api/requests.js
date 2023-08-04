@@ -19,6 +19,15 @@ export class requestData {
             deadline: this.data.deadline,
         }
     }
+
+    isFinished() {
+        return {
+            task_name: this.data.task_name,
+            comment: this.data.comment,
+            deadline: this.data.deadline,
+            is_finished: this.data.is_finished
+        }
+    }
 }
 
 
