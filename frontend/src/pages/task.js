@@ -1,21 +1,16 @@
-import React, { useState, createContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import Header from '../components/header';
 import CreateTask from '../components/createTask';
 import GetTask from '../components/getTask';
-import { Container, Typography, Button, Grid, Fab } from '@mui/material';
+import TaskList from '../components/taskList';
+import urls from '../api/urls';
+import { Container, Typography, Grid, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-export const PostFlag = createContext(); 
-
 const Task = () => {
-    const [postFlag, setPostFlag] = useState(false);
-    const value = {
-        postFlag,
-        setPostFlag
-    }
     const openRef = useRef();
 
-    const openModal = () => openRef.current.click();
+    const openCreateTask = () => openRef.current.click();
     return (
     <div>
         <Header/>
@@ -27,17 +22,15 @@ const Task = () => {
                     </Typography>
                 </Grid>
                 <Grid>
-                    <Fab color='primary' variant='extended' onClick={openModal}>
+                    <Fab color='primary' variant='extended' onClick={openCreateTask}>
                         <AddIcon sx={{ mr: 1 }} />
                         タスク登録
                     </Fab>
                 </Grid>
             </Grid>
         </Container>
-        <PostFlag.Provider value={value}>
-            <GetTask/>
-            <CreateTask create={openRef}/>
-        </PostFlag.Provider>
+        <GetTask displayComponent={TaskList} url={urls.TaskList}/>
+        <CreateTask create={openRef}/>
     </div>
     )
 }

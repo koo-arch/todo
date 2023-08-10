@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import CustomModal from './customModal';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import { PostFlag } from '../pages/task';
+import { Contexts } from '../App';
 import { 
     Box,
     Container,
@@ -21,7 +21,7 @@ import '../styles/styles.css';
 const CreateTask = (props) => {
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const { postFlag, setPostFlag } = useContext(PostFlag);
+    const { postFlag, setPostFlag } = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 

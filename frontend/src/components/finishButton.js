@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
-import urls from '../api/urls';
-import { PostFlag } from '../pages/task';
-import { Box, Button, Fab } from '@mui/material';
+import { Contexts } from '../App';
+import { Box, Button } from '@mui/material';
 
-const FinishButton = (task) => {
+const FinishButton = (props) => {
     const [cookies,] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit } = useForm();
-    const { postFlag, setPostFlag } = useContext(PostFlag);
+    const { postFlag, setPostFlag } = useContext(Contexts);
 
     const putIsFinished = (data) => {
         const requestJson = new requestData(data);
@@ -18,7 +17,7 @@ const FinishButton = (task) => {
             data: data,
             request: requestJson.isFinished(),
             accesstoken: cookies.accesstoken,
-            url: urls.TaskList
+            url: props.url
         }
 
         const request = new requestAPI(param);
@@ -40,11 +39,11 @@ const FinishButton = (task) => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <input type="hidden" value={task.id} {...register('id')} />
-            <input type="hidden" value={task.task_name} {...register('task_name')} />
-            <input type="hidden" value={task.comment} {...register('comment')} />
-            <input type="hidden" value={task.deadline} {...register('deadline')} />
-            <input type="hidden" value={!task.is_finished} {...register('is_finished')} />
+            <input type="hidden" value={props.id} {...register('id')} />
+            <input type="hidden" value={props.task_name} {...register('task_name')} />
+            <input type="hidden" value={props.comment} {...register('comment')} />
+            <input type="hidden" value={props.deadline} {...register('deadline')} />
+            <input type="hidden" value={!props.is_finished} {...register('is_finished')} />
             <Button 
                 type='submit' 
                 variant='contained'
@@ -53,7 +52,7 @@ const FinishButton = (task) => {
                     borderRadius: '100vh'
                 }}
             >
-                完了
+                {props.buttonText}
             </Button>
         </Box>
     )

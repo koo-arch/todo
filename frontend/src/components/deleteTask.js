@@ -4,14 +4,14 @@ import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import CustomModal from './customModal';
 import urls from '../api/urls';
-import { PostFlag } from '../pages/task';
+import { Contexts } from '../App';
 import { Box, Button, IconButton, Grid } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const DeleteTask = (task) => {
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken'])
     const { register, handleSubmit } = useForm();
-    const {postFlag, setPostFlag} = useContext(PostFlag);
+    const {postFlag, setPostFlag} = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 

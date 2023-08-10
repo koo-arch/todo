@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
-import TaskDetail from './taskDetail';
 import { requestAPI } from '../api/requests';
-import urls from '../api/urls';
-import { PostFlag } from '../pages/task';
+import { Contexts } from '../App';
 import Loading from './loading';
 
-const GetTask = () => {
+const GetTask = ({ displayComponent: DisplayComponent, url }) => {
     const initialState = [{
         id: 0,
         task_name: '',
@@ -19,14 +17,14 @@ const GetTask = () => {
     
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
-    const { postFlag } = useContext(PostFlag);
+    const { postFlag } = useContext(Contexts);
     const [isLoading, setIsLoading] = useState(false);
     
 
     const getTaskList = () => {
         const param = {
             accesstoken: cookies.accesstoken,
-            url: urls.TaskList
+            url: url
         }
     
         const request = new requestAPI(param)
@@ -52,7 +50,7 @@ const GetTask = () => {
   return (
     <div>
         <Loading open={isLoading}/>
-        <TaskDetail task={taskList}/>
+        <DisplayComponent task={taskList}/>
     </div>
   );
 };
