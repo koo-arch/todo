@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Box } from '@mui/material';
+import { Modal, Box, IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const CustomModal = (props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -28,6 +29,15 @@ const CustomModal = (props) => {
                 onClose={closeModal}
             >
                 <Box sx={customStyles}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '5px', 
+                        right: '5px', 
+                    }}>
+                        <IconButton onClick={closeModal} size='large'>
+                            <ClearIcon/>
+                        </IconButton>
+                    </div>
                     {props.children}
                 </Box>
             </Modal>

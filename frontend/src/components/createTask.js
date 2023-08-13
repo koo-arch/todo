@@ -21,7 +21,7 @@ import '../styles/styles.css';
 const CreateTask = (props) => {
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const { postFlag, setPostFlag } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 
@@ -49,12 +49,21 @@ const CreateTask = (props) => {
             .then(res => {
                 console.log(res)
                 console.log('新規タスク登録');
-                alert('タスク登録完了');
+                setSnackbarStatus({
+                    open: true,
+                    severity: "success",
+                    message: "タスク登録が完了しました。"
+                })
                 setPostFlag(!postFlag);
                 closeModal();
             })
             .catch(err => {
                 console.log(err.response);
+                setSnackbarStatus({
+                    open: true,
+                    severity: "error",
+                    message: `タスク登録に失敗しました。(code:${err.response.status})`,
+                });
             })
     }
     return (

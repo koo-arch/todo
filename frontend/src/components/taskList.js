@@ -18,7 +18,7 @@ const TaskList = ({task}) => {
       sortable: false,
       width: 70,
       disableClickEventBubbling: true,
-      renderCell: (params) => <UpdateTask {...params.row}/>
+      renderCell: (params) => <UpdateTask url={urls.TaskList} {...params.row}/>
     },
     {
       field: 'deleteBtn',
@@ -26,7 +26,7 @@ const TaskList = ({task}) => {
       sortable: false,
       width: 70,
       disableClickEventBubbling: true,
-      renderCell: (params) => <DeleteTask {...params.row}/>
+      renderCell: (params) => <DeleteTask url={urls.TaskList} {...params.row}/>
     },
     {
       field: 'finishBtn',
@@ -34,7 +34,7 @@ const TaskList = ({task}) => {
       sortable: false,
       width: 100,
       disableClickEventBubbling: true,
-      renderCell: (params) => <FinishButton buttonText='完了' url={urls.TaskList} {...params.row}/>
+      renderCell: (params) => <FinishButton buttonText='完了' message='タスク完了' url={urls.TaskList} {...params.row}/>
     },
   ]
 

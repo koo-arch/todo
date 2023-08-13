@@ -13,7 +13,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 export const Contexts = createContext();
 
 const App = () => {
+  const initialState = {
+    open: false,
+    severity: "success",
+    message: "成功しました。"
+  }
+
   const defaultTheme = createTheme();
+  const [snackbarStatus, setSnackbarStatus] = useState(initialState);
   const [isRedirect, setIsRedirect] = useState(false);
   const [postFlag, setPostFlag] = useState(false);
   const value = { 
@@ -21,7 +28,10 @@ const App = () => {
     setIsRedirect,
     postFlag,
     setPostFlag,
+    snackbarStatus,
+    setSnackbarStatus,
    };
+   
   const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
   const isTokenExist = !!cookies.accesstoken && !!cookies.refreshtoken
   console.log(isTokenExist)

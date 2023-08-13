@@ -3,7 +3,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import CustomModal from './customModal';
-import urls from '../api/urls';
 import { Contexts } from '../App';
 import {
     Box,
@@ -17,10 +16,10 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DateTimeField from './dateTimeField';
 
-const UpdateTask = (task) => {
+const UpdateTask = (props) => {
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken'])
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const {postFlag, setPostFlag} = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 
@@ -35,7 +34,7 @@ const UpdateTask = (task) => {
             data: data,
             request: requestJson.task(),
             accesstoken: cookies.accesstoken,
-            url: urls.TaskList
+            url: props.url
         }
 
         const request = new requestAPI(param);
@@ -46,12 +45,21 @@ const UpdateTask = (task) => {
         putTask(data)
             .then(res => {
                 console.log(res)
-                console.log('変更完了')
+                setSnackbarStatus({
+                    open: true,
+                    severity: "success",
+                    message: "変更が完了しました。"
+                });
                 setPostFlag(!postFlag);
                 closeModal();
             })
             .catch(err => {
                 console.log(err.response)
+                setSnackbarStatus({
+                    open: true,
+                    severity: "error",
+                    message: `変更に失敗しました。(code:${err.response.status})`,
+                });
             })
     }
     return(
@@ -73,12 +81,12 @@ const UpdateTask = (task) => {
                             タスク編集
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                            <input type="hidden" value={task.id} {...register('id')}/>
+                            <input type="hidden" value={props.id} {...register('id')}/>
                             <TextField
                                 required
                                 error={!!errors.task_name}
                                 margin='normal'
-                                defaultValue={task.task_name}
+                                defaultValue={props.task_name}
                                 fullWidth
                                 label="タスク名"
                                 helperText={!!errors.task_name && errors.task_name.message}
@@ -89,14 +97,14 @@ const UpdateTask = (task) => {
                                 rows={3}
                                 fullWidth
                                 margin="normal"
-                                defaultValue={task.comment}
+                                defaultValue={props.comment}
                                 label="コメント"
                                 {...register('comment')}
                             />
                             <Controller
                                 name="deadline"
                                 control={control}
-                                defaultValue={new Date(task.deadline)}
+                                defaultValue={new Date(props.deadline)}
                                 rules={{
                                     required: "期限を入力してください"
                                 }}

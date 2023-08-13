@@ -1,13 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import Header from '../components/header';
 import CreateTask from '../components/createTask';
 import GetTask from '../components/getTask';
 import TaskList from '../components/taskList';
 import urls from '../api/urls';
+import CustomSnackbar from '../components/customSnackbar';
 import { Container, Typography, Grid, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Contexts } from '../App';
 
 const Task = () => {
+    const { snackbarStatus } = useContext(Contexts);
     const openRef = useRef();
 
     const openCreateTask = () => openRef.current.click();
@@ -31,6 +34,7 @@ const Task = () => {
         </Container>
         <GetTask displayComponent={TaskList} url={urls.TaskList}/>
         <CreateTask create={openRef}/>
+        <CustomSnackbar {...snackbarStatus}/>
     </div>
     )
 }

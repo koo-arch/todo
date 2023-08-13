@@ -8,7 +8,7 @@ import { Box, Button } from '@mui/material';
 const FinishButton = (props) => {
     const [cookies,] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit } = useForm();
-    const { postFlag, setPostFlag } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
 
     const putIsFinished = (data) => {
         const requestJson = new requestData(data);
@@ -28,33 +28,44 @@ const FinishButton = (props) => {
         console.log(data)
         putIsFinished(data)
             .then(res => {
-                alert('タスク完了');
-                console.log(res.data)
+                console.log(res.data);
+                setSnackbarStatus({
+                    open: true,
+                    severity: "success",
+                    message: props.message
+                });
                 setPostFlag(!postFlag);
             })
             .catch(err => {
                 console.log(err.response.data);
+                setSnackbarStatus({
+                    open: true,
+                    severity: "error",
+                    message: `タスク処理に失敗しました。(code:${err.response.status})`,
+                });
             })
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <input type="hidden" value={props.id} {...register('id')} />
-            <input type="hidden" value={props.task_name} {...register('task_name')} />
-            <input type="hidden" value={props.comment} {...register('comment')} />
-            <input type="hidden" value={props.deadline} {...register('deadline')} />
-            <input type="hidden" value={!props.is_finished} {...register('is_finished')} />
-            <Button 
-                type='submit' 
-                variant='contained'
-                size='small'
-                sx={{
-                    borderRadius: '100vh'
-                }}
-            >
-                {props.buttonText}
-            </Button>
-        </Box>
+        <div>
+            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                <input type="hidden" value={props.id} {...register('id')} />
+                <input type="hidden" value={props.task_name} {...register('task_name')} />
+                <input type="hidden" value={props.comment} {...register('comment')} />
+                <input type="hidden" value={props.deadline} {...register('deadline')} />
+                <input type="hidden" value={!props.is_finished} {...register('is_finished')} />
+                <Button 
+                    type='submit' 
+                    variant='contained'
+                    size='small'
+                    sx={{
+                        borderRadius: '100vh'
+                    }}
+                >
+                    {props.buttonText}
+                </Button>
+            </Box>
+        </div>
     )
 }
 

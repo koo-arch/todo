@@ -18,7 +18,7 @@ const GetTask = ({ displayComponent: DisplayComponent, url }) => {
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { postFlag } = useContext(Contexts);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     
 
     const getTaskList = () => {
@@ -33,7 +33,6 @@ const GetTask = ({ displayComponent: DisplayComponent, url }) => {
 
 
     useEffect(() => {
-        setIsLoading(true);
         getTaskList()
             .then(res => {
                 setTaskList(res.data);
@@ -49,8 +48,11 @@ const GetTask = ({ displayComponent: DisplayComponent, url }) => {
 
   return (
     <div>
+        {isLoading ? 
         <Loading open={isLoading}/>
+        : 
         <DisplayComponent task={taskList}/>
+        }
     </div>
   );
 };
