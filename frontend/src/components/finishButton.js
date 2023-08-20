@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import { Contexts } from '../App';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 const FinishButton = (props) => {
+    const { url, message, id, task_name, comment, deadline, is_finished, buttonText } = props;
     const [cookies,] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit } = useForm();
     const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
@@ -17,7 +18,7 @@ const FinishButton = (props) => {
             data: data,
             request: requestJson.isFinished(),
             accesstoken: cookies.accesstoken,
-            url: props.url
+            url: url
         }
 
         const request = new requestAPI(param);
@@ -32,7 +33,7 @@ const FinishButton = (props) => {
                 setSnackbarStatus({
                     open: true,
                     severity: "success",
-                    message: props.message
+                    message: message
                 });
                 setPostFlag(!postFlag);
             })
@@ -48,12 +49,12 @@ const FinishButton = (props) => {
 
     return (
         <div>
-            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                <input type="hidden" value={props.id} {...register('id')} />
-                <input type="hidden" value={props.task_name} {...register('task_name')} />
-                <input type="hidden" value={props.comment} {...register('comment')} />
-                <input type="hidden" value={props.deadline} {...register('deadline')} />
-                <input type="hidden" value={!props.is_finished} {...register('is_finished')} />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input type="hidden" value={id} {...register('id')} />
+                <input type="hidden" value={task_name} {...register('task_name')} />
+                <input type="hidden" value={comment} {...register('comment')} />
+                <input type="hidden" value={deadline} {...register('deadline')} />
+                <input type="hidden" value={!is_finished} {...register('is_finished')} />
                 <Button 
                     type='submit' 
                     variant='contained'
@@ -62,9 +63,9 @@ const FinishButton = (props) => {
                         borderRadius: '100vh'
                     }}
                 >
-                    {props.buttonText}
+                    {buttonText}
                 </Button>
-            </Box>
+            </form>
         </div>
     )
 }

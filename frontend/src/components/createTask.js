@@ -1,32 +1,25 @@
 import React, { useContext, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm, Controller } from 'react-hook-form';
-import CustomModal from './customModal';
+import FormDialog from './formDialog';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
 import { Contexts } from '../App';
-import { 
-    Box,
-    Container,
-    Button,
-    TextField,
-    Typography,
-    Grid,
-    Fab
-} from '@mui/material';
+import { TextField, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DateTimeField from './dateTimeField';
 import '../styles/styles.css';
 
 const CreateTask = (props) => {
+    const { create } = props;
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 
-    const openModal = () => openRef.current.click();
-    const closeModal = () => closeRef.current.click();
+    const openDialog = () => openRef.current.click();
+    const closeDialog = () => closeRef.current.click();
 
 
     const postNewTask = (data) => {
@@ -55,7 +48,7 @@ const CreateTask = (props) => {
                     message: "タスク登録が完了しました。"
                 })
                 setPostFlag(!postFlag);
-                closeModal();
+                closeDialog();
             })
             .catch(err => {
                 console.log(err.response);
@@ -69,72 +62,45 @@ const CreateTask = (props) => {
     return (
     <div>
         <div className='fab-container'>
-            <Fab color="primary" onClick={openModal} ref={props.create}>
+            <Fab color="primary" onClick={openDialog} ref={create}>
                 <AddIcon fontSize='large'/>
             </Fab>
         </div>
-        <CustomModal open={openRef} close={closeRef}>
-            <Container component={"div"} maxWidth="xs">
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+        <FormDialog 
+            open={openRef}
+            close={closeRef}
+            title="タスク登録"
+            buttonText="登録"
+        >
+            <form id="form" onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    required
+                    error={!!errors.task_name}
+                    margin='normal'
+                    fullWidth
+                    label="タスク名"
+                    helperText={!!errors.task_name && errors.task_name.message}
+                    {...register('task_name', { required: "タスク名を入力してください"})}
+                />
+                <TextField
+                    multiline
+                    rows={5}
+                    fullWidth
+                    margin="normal"
+                    label="コメント"
+                    {...register('comment')}
+                />
+                <Controller
+                    name="deadline"
+                    control={control}
+                    defaultValue={new Date()}
+                    rules={{
+                        required: "期限を入力してください"
                     }}
-                >
-                    <Typography component={"h1"} variant='h5' sx={{ mt: 2 }}>
-                        タスク登録
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                        <TextField
-                            required
-                            error={!!errors.task_name}
-                            margin='normal'
-                            fullWidth
-                            label="タスク名"
-                            helperText={!!errors.task_name && errors.task_name.message}
-                            {...register('task_name', { required: "タスク名を入力してください"})}
-                        />
-                        <TextField
-                            multiline
-                            rows={3}
-                            fullWidth
-                            margin="normal"
-                            label="コメント"
-                            {...register('comment')}
-                        />
-                        <Controller
-                            name="deadline"
-                            control={control}
-                            defaultValue={new Date()}
-                            rules={{
-                                required: "期限を入力してください"
-                            }}
-                            render={({ field: { value, onChange } }) => <DateTimeField value={value} onChange={onChange}/>}
-                        />
-                        <Grid container sx={{ mt: 3, mb: 2 }}>
-                            <Grid item xs>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={closeModal}
-                                >
-                                    閉じる
-                                </Button>
-                            </Grid>
-                            <Grid>
-                                <Button
-                                    variant="contained"
-                                    type="submit"
-                                >
-                                    登録
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-            </Container>
-        </CustomModal>
+                    render={({ field: { value, onChange } }) => <DateTimeField value={value} onChange={onChange}/>}
+                />
+            </form>
+        </FormDialog>
     </div>
     )
 }

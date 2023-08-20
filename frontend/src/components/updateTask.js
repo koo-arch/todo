@@ -2,30 +2,22 @@ import React, { useContext, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
-import CustomModal from './customModal';
+import FormDialog from './formDialog';
 import { Contexts } from '../App';
-import {
-    Box,
-    Container,
-    Button,
-    TextField,
-    Typography,
-    Grid,
-    IconButton
-} from '@mui/material';
+import { TextField, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DateTimeField from './dateTimeField';
 
 const UpdateTask = (props) => {
+    const { url, id, task_name, comment, deadline, iconSize, size } = props;
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken'])
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
     const openRef = useRef();
     const closeRef = useRef();
 
-    const openModal = () => openRef.current.click();
-    const closeModal = () => closeRef.current.click();
-
+    const openDialog = () => openRef.current.click();
+    const closeDialog = () => closeRef.current.click();
 
     const putTask = (data) => {
         const requestJson = new requestData(data);
@@ -34,7 +26,7 @@ const UpdateTask = (props) => {
             data: data,
             request: requestJson.task(),
             accesstoken: cookies.accesstoken,
-            url: props.url
+            url: url
         }
 
         const request = new requestAPI(param);
@@ -51,7 +43,7 @@ const UpdateTask = (props) => {
                     message: "変更が完了しました。"
                 });
                 setPostFlag(!postFlag);
-                closeModal();
+                closeDialog();
             })
             .catch(err => {
                 console.log(err.response)
@@ -64,74 +56,47 @@ const UpdateTask = (props) => {
     }
     return(
         <div>
-            <IconButton color='primary' onClick={openModal}>
-                <EditIcon/>
+            <IconButton color='primary' size={size} onClick={openDialog}>
+                <EditIcon sx={iconSize} />
             </IconButton>
-            <CustomModal open={openRef} close={closeRef}>
-                <Container component={"div"} maxWidth="xs">
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+            <FormDialog
+                open={openRef}
+                close={closeRef}
+                title="タスク編集"
+                buttonText="変更"
+            >
+                <form id="form" onSubmit={handleSubmit(onSubmit)}>
+                    <input type="hidden" value={id} {...register('id')}/>
+                    <TextField
+                        required
+                        error={!!errors.task_name}
+                        margin='normal'
+                        defaultValue={task_name}
+                        fullWidth
+                        label="タスク名"
+                        helperText={!!errors.task_name && errors.task_name.message}
+                        {...register('task_name', { required: "タスク名を入力してください" })}
+                    />
+                    <TextField
+                        multiline
+                        rows={5}
+                        fullWidth
+                        margin="normal"
+                        defaultValue={comment}
+                        label="コメント"
+                        {...register('comment')}
+                    />
+                    <Controller
+                        name="deadline"
+                        control={control}
+                        defaultValue={new Date(deadline)}
+                        rules={{
+                            required: "期限を入力してください"
                         }}
-                    >
-                        <Typography component={"h1"} variant='h5' sx={{ mt: 2 }}>
-                            タスク編集
-                        </Typography>
-                        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                            <input type="hidden" value={props.id} {...register('id')}/>
-                            <TextField
-                                required
-                                error={!!errors.task_name}
-                                margin='normal'
-                                defaultValue={props.task_name}
-                                fullWidth
-                                label="タスク名"
-                                helperText={!!errors.task_name && errors.task_name.message}
-                                {...register('task_name', { required: "タスク名を入力してください" })}
-                            />
-                            <TextField
-                                multiline
-                                rows={3}
-                                fullWidth
-                                margin="normal"
-                                defaultValue={props.comment}
-                                label="コメント"
-                                {...register('comment')}
-                            />
-                            <Controller
-                                name="deadline"
-                                control={control}
-                                defaultValue={new Date(props.deadline)}
-                                rules={{
-                                    required: "期限を入力してください"
-                                }}
-                                render={({ field: { value, onChange } }) => <DateTimeField value={value} onChange={onChange} />}
-                            />
-                            <Grid container sx={{ mt: 3, mb: 2 }}>
-                                <Grid item xs>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={closeModal}
-                                    >
-                                        閉じる
-                                    </Button>
-                                </Grid>
-                                <Grid>
-                                    <Button
-                                        variant="contained"
-                                        type="submit"
-                                    >
-                                        更新
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Box>
-                </Container>
-            </CustomModal>
+                        render={({ field: { value, onChange } }) => <DateTimeField value={value} onChange={onChange} />}
+                    />
+                </form>
+            </FormDialog>
         </div>
     )
 }

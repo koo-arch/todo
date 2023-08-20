@@ -4,6 +4,7 @@ import useLogout from '../hooks/useLogout';
 import { requestAPI } from '../api/requests';
 import urls from '../api/urls';
 import useCustomAxios from '../hooks/useCustomAxios';
+import TemporaryDrawer from './temporaryDrawer';
 import {
   AppBar,
   Button,
@@ -15,7 +16,6 @@ import {
   Menu,
   MenuItem
 } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const Header = () => {
@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   const [userInfo, setUserInfo] = useState(initialState);
-  const [cookies, setCookie, removeCookie] = useCookies(['accesstoken', 'refreshtoken']);
+  const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
   const logout = useLogout();
   const customAxios = useCustomAxios();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -66,15 +66,7 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon/>
-          </IconButton>
+          <TemporaryDrawer/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {userInfo.email} 
           </Typography>

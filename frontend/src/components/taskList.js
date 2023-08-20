@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { Container, useMediaQuery } from '@mui/material';
 import UpdateTask from './updateTask';
 import DeleteTask from './deleteTask';
 import FinishButton from './finishButton';
@@ -7,16 +7,29 @@ import TableField from './tableField';
 import urls from '../api/urls';
 
 const TaskList = ({task}) => {
-  const columns = [
-    { field: 'deadline', headerName: 'Deadline', flex: 2 },
+  const isMediumSize = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  const isMobileSize = useMediaQuery('(max-width: 500px');
+
+  const eachColumns = isMediumSize
+  ? [
+    // 900px未満の列項目
+    { field: 'deadline', headerName: 'Deadline', flex: 1 },
     { field: 'task_name', headerName: 'Tasks', flex: 1.5 },
-    { field: 'comment', headerName: 'Comments', flex: 4 },
+  ]
+  :[
+    // 900px以上の列項目
+    { field: 'deadline', headerName: 'Deadline', flex: 2 },
+    { field: 'task_name', headerName: 'Tasks', flex: 2 },
+    { field: 'comment', headerName: 'Comments', flex: 3 },
     { field: 'updated_at', headerName: 'Update', flex: 2 },
+  ]
+  const buttonColumns =  isMobileSize ? []
+  : [
     {
       field: 'editBtn',
       headerName: '編集',
       sortable: false,
-      width: 70,
+      width: 60,
       disableClickEventBubbling: true,
       renderCell: (params) => <UpdateTask url={urls.TaskList} {...params.row}/>
     },
@@ -24,19 +37,22 @@ const TaskList = ({task}) => {
       field: 'deleteBtn',
       headerName: '削除',
       sortable: false,
-      width: 70,
+      width: 60,
       disableClickEventBubbling: true,
       renderCell: (params) => <DeleteTask url={urls.TaskList} {...params.row}/>
     },
-    {
-      field: 'finishBtn',
-      headerName: '完了',
-      sortable: false,
-      width: 100,
-      disableClickEventBubbling: true,
-      renderCell: (params) => <FinishButton buttonText='完了' message='タスク完了' url={urls.TaskList} {...params.row}/>
-    },
   ]
+  
+  const columns = [...eachColumns, ...buttonColumns, 
+    {
+    field: 'finishBtn',
+    headerName: '完了',
+    sortable: false,
+    width: 90,
+    disableClickEventBubbling: true,
+    renderCell: (params) => <FinishButton buttonText='完了' message='タスク完了' url={urls.TaskList} {...params.row} />
+  },
+]
 
   // 締切日の昇順をデフォルトにする
   const sortedRows = [...task].sort((a, b) => {
@@ -71,11 +87,37 @@ const TaskList = ({task}) => {
 
   return (
     <Container>
-      <TableField rows={groupedTasks.expired} columns={columns} title="期限切れのタスク"/>
-      <TableField rows={groupedTasks.today} columns={columns} title="1日以内のタスク" message="1日以内のタスクはありません"/>
-      <TableField rows={groupedTasks.oneWeek} columns={columns} title="1週間以内のタスク"/>
-      <TableField rows={groupedTasks.oneMonth} columns={columns} title="1ヶ月以内のタスク"/>
-      <TableField rows={groupedTasks.later} columns={columns} title="1ヶ月以降のタスク"/>
+      <TableField 
+        rows={groupedTasks.expired} 
+        columns={columns} 
+        url={urls.TaskList} 
+        title="期限切れのタスク"
+      />
+      <TableField 
+        rows={groupedTasks.today} 
+        columns={columns} 
+        url={urls.TaskList} 
+        title="1日以内のタスク" 
+        message="1日以内のタスクはありません"
+      />
+      <TableField 
+        rows={groupedTasks.oneWeek} 
+        columns={columns} 
+        url={urls.TaskList} 
+        title="1週間以内のタスク"
+      />
+      <TableField 
+        rows={groupedTasks.oneMonth} 
+        columns={columns} 
+        url={urls.TaskList} 
+        title="1ヶ月以内のタスク"
+      />
+      <TableField 
+        rows={groupedTasks.later} 
+        columns={columns} 
+        url={urls.TaskList} 
+        title="1ヶ月以降のタスク"
+      />
     </Container>
   )
 }
