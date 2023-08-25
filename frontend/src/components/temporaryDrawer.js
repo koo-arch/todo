@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
-import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { 
+    Drawer,
+    Divider,
+    IconButton, 
+    List,
+    ListItem,
+    ListItemButton, 
+    ListItemIcon, 
+    ListItemText 
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import DoneIcon from '@mui/icons-material/Done';
 
 
-const TemporaryDrawer = () => {
+const TemporaryDrawer = (props) => {
+    const { user } = props;
     const [open, setOpen] = useState(false);
 
     const toggleDrawer = () => setOpen(!open);
@@ -23,6 +33,13 @@ const TemporaryDrawer = () => {
             </IconButton>
             <Drawer anchor="left" open={open} onClose={toggleDrawer}>
                 <List>
+                    <ListItem>
+                        <ListItemText primary="ToDoリスト"/>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemText primary={user}/>
+                    </ListItem>
+                    <Divider/>
                     <ListItemButton href='task'>
                         <ListItemIcon>
                             <FormatListBulletedIcon/>

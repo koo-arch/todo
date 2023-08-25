@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
+import { Contexts } from '../App';
 import urls from '../api/urls';
-import useCustomAxios from '../hooks/useCustomAxios';
+import CustomSnackbar from '../components/customSnackbar';
 import { 
     Button, 
     Box, 
@@ -22,10 +23,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 const Login = (props) => {
     const defaultTheme = createTheme();
     const navigation = useNavigate();
-
+    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, clearErrors, setError, formState: { errors } } = useForm();
-    const customAxios = useCustomAxios();
 
     const postLogin = (data) => {
         const requestJson = new requestData(data);
@@ -37,7 +37,7 @@ const Login = (props) => {
         }
     
         const request = new requestAPI(param);
-        return request.post(customAxios);
+        return request.post();
     }
 
 
@@ -51,9 +51,18 @@ const Login = (props) => {
             })
             .catch(err => {
                 const errRes = err.response.data
+                console.log(err.response.status)
                 if (errRes.detail === undefined) {
+                    // 各項目にエラーをセット
                     Object.keys(errRes).map((key) => {
-                        setError(`${key}`, { type: "validate", message: errRes[`${key}`]})
+                        const messages = errRes[`${key}`]
+                        const newMessages = new Array();
+                        
+                        // メッセージ内のスペースを削除
+                        for (let i = 0; i < messages.length; i++) {
+                            newMessages[i] = messages[i].replace(/ /g, "")
+                        }
+                        setError(`${key}`, { type: "validate", message: newMessages})
                     })
                 } else {
                     setError('email', { type: "validate", message: "メールアドレスかパスワードが違います" })
@@ -122,6 +131,7 @@ const Login = (props) => {
                     </Grid>
                 </Box>
             </Container>
+            <CustomSnackbar {...snackbarStatus}/>
         </ThemeProvider>
     );
 };

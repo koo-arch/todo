@@ -5,12 +5,13 @@ import GetTask from '../components/getTask';
 import TaskList from '../components/taskList';
 import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
-import { Container, Typography, Grid, Fab } from '@mui/material';
+import { Container, useMediaQuery, Typography, Grid, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Contexts } from '../App';
 
 const Task = () => {
     const { snackbarStatus } = useContext(Contexts);
+    const isMobileSize = useMediaQuery('(max-width: 500px');
     const openRef = useRef();
 
     const openCreateTask = () => openRef.current.click();
@@ -24,12 +25,14 @@ const Task = () => {
                         タスク一覧
                     </Typography>
                 </Grid>
-                <Grid>
-                    <Fab color='primary' variant='extended' onClick={openCreateTask}>
-                        <AddIcon sx={{ mr: 1 }} />
-                        タスク登録
-                    </Fab>
-                </Grid>
+                {!isMobileSize &&
+                    <Grid>
+                        <Fab color='primary' variant='extended' onClick={openCreateTask}>
+                            <AddIcon sx={{ mr: 1 }} />
+                            タスク登録
+                        </Fab>
+                    </Grid>
+                }
             </Grid>
         </Container>
         <GetTask displayComponent={TaskList} url={urls.TaskList}/>

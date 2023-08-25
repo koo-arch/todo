@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Contexts } from '../App';
 import UpdateTask from './updateTask';
 import DeleteTask from './deleteTask';
+import FinishButton from './finishButton';
 import { 
     Dialog, 
     DialogTitle, 
@@ -15,10 +17,15 @@ import {
 
 const DetailDialog = (props) => {
     const { url, open, onClose, rowData } = props;
+    const { postFlag } = useContext(Contexts);
     const iconSize = {
         width: 30,
         height: 30,
     }
+    
+    useEffect(() => {
+        onClose();
+    },[postFlag])
 
     return(
         <>
@@ -68,8 +75,10 @@ const DetailDialog = (props) => {
                             />
                         </ListItem>
                     </List>
-                    <Grid container justifyContent='space-evenly'>
-                        { !rowData.is_finished && 
+                </DialogContent>
+                <Grid container justifyContent='space-evenly'>
+                    { !rowData.is_finished &&
+                        <>
                             <Grid item>
                                 <UpdateTask 
                                     url={url}
@@ -78,17 +87,27 @@ const DetailDialog = (props) => {
                                     {...rowData}
                                 />
                             </Grid>
-                        }
+                            <Grid item>
+                                <DeleteTask 
+                                    url={url}
+                                    iconSize={iconSize}
+                                    size="large"
+                                    {...rowData}
+                                />
+                            </Grid>
+                        </>
+                    }
+                    { rowData.is_finished && 
                         <Grid item>
-                            <DeleteTask 
+                            <FinishButton
                                 url={url}
-                                iconSize={iconSize}
-                                size="large"
+                                buttonText='未完了に戻す'
+                                message='タスク一覧に移動しました。'
                                 {...rowData}
                             />
                         </Grid>
-                    </Grid>
-                </DialogContent>
+                    }
+                </Grid>
                 <DialogActions>
                     <Button variant="contained" onClick={onClose}>閉じる</Button>
                 </DialogActions>

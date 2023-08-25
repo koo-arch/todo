@@ -17,7 +17,7 @@ const Top = () => {
                     }}
                 >
                     <Typography component={"h1"} variant="h3" sx={{mt: 3}}>
-                        ToDoアプリ
+                        ToDoリスト
                     </Typography>
                     <Button 
                         variant="contained"

@@ -66,9 +66,9 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <TemporaryDrawer/>
+          <TemporaryDrawer user={userInfo.email}/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {userInfo.email} 
+            ToDoリスト
           </Typography>
           <div>
             <IconButton

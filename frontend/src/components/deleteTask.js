@@ -2,10 +2,15 @@ import React, { useState, useContext, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
-import CustomModal from './customModal';
 import FormDialog from './formDialog';
 import { Contexts } from '../App';
-import { Box, Button, IconButton, Grid, Container, Typography, List, ListItem, ListItemText, DialogContentText } from '@mui/material';
+import { 
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+    DialogContentText
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const DeleteTask = (props) => {
@@ -69,25 +74,30 @@ const DeleteTask = (props) => {
             >
                 <form id="form" onSubmit={handleSubmit(onSubmit)}>
                     <input type="hidden" value={id} {...register('id')} />
-                    <DialogContentText>以下の項目を削除してよろしいですか？</DialogContentText>
+                    <DialogContentText color="error">
+                        以下の項目を削除してよろしいですか？
+                    </DialogContentText>
                     <List>
                         <ListItem>
                             <ListItemText
                                 primaryTypographyProps={{ noWrap: true }}
+                                primary="期限"
+                                secondary={deadline}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primaryTypographyProps={{ noWrap: true }}
                                 primary="タスク名"
-                                secondary={task_name}/>
+                                secondary={task_name}
+                            />
                         </ListItem>
                         <ListItem>
                             <ListItemText
                                 primaryTypographyProps={{ noWrap: true }}
                                 primary="コメント"
-                                secondary={comment}/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText
-                                primaryTypographyProps={{ noWrap: true }}
-                                primary="期限"
-                                secondary={deadline}/>
+                                secondary={comment}
+                            />
                         </ListItem>
                     </List>
                 </form>

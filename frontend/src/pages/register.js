@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
-import { useCookies } from "react-cookie";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
-import useCustomAxios from "../hooks/useCustomAxios";
+import { Contexts } from "../App";
+import CustomSnackbar from "../components/customSnackbar";
 import { 
     Button,
     Box,
@@ -22,10 +22,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Register = () => {
     const navigation = useNavigate();
-    const [cookie, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
+    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
     const { register, handleSubmit, getValues, clearErrors, setError, formState: { errors }, } = useForm();
     const defaultTheme = createTheme();
-    const customAxios = useCustomAxios();
 
 
     const postRegister = (data) => {
@@ -38,7 +37,7 @@ const Register = () => {
         }
 
         const request = new requestAPI(param);
-        return request.post(customAxios);
+        return request.post();
     }
 
     
@@ -47,14 +46,26 @@ const Register = () => {
         postRegister(data)
             .then(res =>  {
                 console.log(res.data)
-                alert('登録が完了しました');
                 navigation('/login');
+                setSnackbarStatus({
+                    open: true,
+                    severity: "success",
+                    message: "ユーザー登録が完了しました。"
+                })
             })
             .catch(err => {
                 const errRes = err.response.data
                 console.log(errRes);
+                // 各項目にエラーをセット
                 Object.keys(errRes).map((key) => {
-                    setError(`${key}`, { type: "validate", message: errRes[`${key}`]})
+                    const messages = errRes[`${key}`]
+                    const newMessages = new Array();
+
+                    // メッセージ内のスペースを削除
+                    for (let i = 0; i < messages.length; i++) {
+                        newMessages[i] = messages[i].replace(/ /g, "")
+                    }
+                    setError(`${key}`, { type: "validate", message: newMessages})
                 })
             });
     };
@@ -135,6 +146,7 @@ const Register = () => {
                     </Grid>
                 </Box>
             </Container>
+            <CustomSnackbar {...snackbarStatus}/>
         </ThemeProvider>
     );
 };
