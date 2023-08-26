@@ -1,0 +1,10 @@
+{% block subject %}
+【ToDoリスト】メールアドレス変更
+{% endblock subject %}
+
+{% block text_body %}
+{{email}}
+メールアドレス変更のリクエストが行われました。
+以下のリンクから再設定を行ってください。
+{{ protocol }}://{{ domain }}/{{ url }}
+{% endblock text_body %}

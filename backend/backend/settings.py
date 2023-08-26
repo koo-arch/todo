@@ -136,10 +136,49 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     #トークンをJWTに設定
     'AUTH_HEADER_TYPES': ('JWT'),
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=10),
     'ROTATE_REFRESH_TOKENS': True,
     'UPDATE_LAST_LOGIN': True,
 }
 
+# ローカル確認用
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# 本番環境用
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'xxx@gmail.com'
+EMAIL_HOST_PASSWORD = 'xxx'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'xxx@gmail.com'
+
+DJOSER = {
+    'TOKEN_MODEL': None,
+    # メールアドレス変更完了メール
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    # パスワード変更完了メール
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    # メールアドレスリセット完了用URL
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    # パスワードリセット完了用URL
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+
+    'SERIALIZERS': {
+        'user_create': 'todo.serializers.CustomUserSerializer',
+        'user': 'todo.serializers.CustomUserSerializer',
+        'current_user': 'todo.serializers.CustomUserSerializer',
+    },
+
+    'EMAIL': {
+        # パスワードリセット
+        'password_reset': 'todo.email.PasswordResetEmail',
+        # パスワードリセット完了
+        'password_changed_confirmation': 'todo.email.PasswordChangedConfirmationEmail',
+        # メールアドレスリセット
+        'username_reset': 'todo.email.UsernameResetEmail',
+        # メールアドレスリセット完了
+        'username_changed_confirmation': 'todo.email.UsernameChangedConfirmationEmail',
+    },
+}
