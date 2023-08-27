@@ -28,6 +28,22 @@ export class requestData {
             is_finished: this.data.is_finished
         }
     }
+
+    newPassword() {
+        return {
+            uid: this.data.uid,
+            token: this.data.token,
+            new_password: this.data.password,
+        }
+    }
+
+    newEmail() {
+        return {
+            uid: this.data.uid,
+            token: this.data.token,
+            new_email: this.data.password,
+        }
+    }
 }
 
 

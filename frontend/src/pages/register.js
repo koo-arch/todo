@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
 import { Contexts } from "../App";
 import CustomSnackbar from "../components/customSnackbar";
+import PasswordField from "../components/passwordField";
 import { 
     Button,
     Box,
@@ -14,8 +15,8 @@ import {
     TextField,
     Avatar,
     Grid,
-    Link
 } from "@mui/material";
+import CustomLink from "../components/CustomLink";
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -98,26 +99,24 @@ const Register = () => {
                             helperText={!!errors.email && errors.email.message}
                             {...register('email', { required: "メールアドレスを入力してください" })}
                         />
-                        <TextField
+                        <PasswordField
                             required
                             error={!!errors.password}
                             margin="normal"
                             fullWidth
                             label="パスワード"
-                            type="password"
                             helperText={!!errors.password && errors.password.message}
                             {...register('password', {
                                 required: "パスワードを入力してください",
                                 minLength: { value: 8, message: `8文字以上で入力してください。` },})
                             }
                         />
-                        <TextField
+                        <PasswordField
                             required
                             error={!!errors.passwordConfirmation}
                             margin="normal"
                             fullWidth
                             label="パスワード(確認)"
-                            type="password"
                             helperText={!!errors.passwordConfirmation && errors.passwordConfirmation.message}
                             {...register('passwordConfirmation', {
                                 required: "パスワードを再入力してください",
@@ -127,7 +126,7 @@ const Register = () => {
                                     )}
                                 })
                             }
-                            />
+                        />
                         <Button
                             variant="contained"
                             fullWidth
@@ -139,9 +138,9 @@ const Register = () => {
                     </Box>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="login" variant="body2">
+                            <CustomLink to="/login" variant="body2">
                                 アカウントをお持ちの場合
-                            </Link>
+                            </CustomLink>
                         </Grid>
                     </Grid>
                 </Box>

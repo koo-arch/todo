@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
 import { Contexts } from '../App';
 import urls from '../api/urls';
@@ -15,9 +15,10 @@ import {
     TextField,
     Avatar,
     Grid,
-    Link
 } from "@mui/material";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import CustomLink from '../components/CustomLink';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PasswordField from '../components/passwordField';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Login = (props) => {
@@ -99,13 +100,12 @@ const Login = (props) => {
                             helperText={!!errors.email && errors.email.message}
                             {...register('email', {required: "メールアドレスを入力してください"})}
                         />
-                        <TextField
+                        <PasswordField
                             required
                             error={!!errors.password}
                             margin='normal'
                             fullWidth
                             label="パスワード"
-                            type="password"
                             helperText={!!errors.password && errors.password.message}
                             {...register('password', { required: "パスワードを入力してください"})}/>
                         <Button
@@ -119,14 +119,14 @@ const Login = (props) => {
                     </Box>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <CustomLink to="/password/reset" variant="body2">
                                 パスワードを忘れた
-                            </Link>
+                            </CustomLink>
                         </Grid>
                         <Grid item>
-                            <Link href="register" variant="body2">
+                            <CustomLink to="/register" variant="body2">
                                 新規登録はこちら
-                            </Link>
+                            </CustomLink>
                         </Grid>
                     </Grid>
                 </Box>

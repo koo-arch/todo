@@ -6,6 +6,8 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Task from './pages/task';
 import Finished from './pages/finished';
+import ResetPassword from './pages/resetPassword';
+import ResetPasswordConfirm from './pages/resetPasswordConfirm';
 import NotFound from './notFound';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -46,6 +48,8 @@ const App = () => {
             <Route path='/register' element={ !isTokenExist ? <Register/> : <Navigate replace to='/task'/> }/>
             <Route path='/task' element={ isTokenExist ? <Task /> : <Navigate replace to='/login' />}/>
             <Route path='/finished' element={ isTokenExist ? <Finished /> : <Navigate replace to='/login' />}/>
+            <Route path='/password/reset' element={ !isTokenExist ? <ResetPassword /> : <Navigate replace to='/task' />}/>
+            <Route path='/password/reset/confirm/:uid/:token' element={ !isTokenExist ? <ResetPasswordConfirm /> : <Navigate replace to='/task' />}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
         </Contexts.Provider>

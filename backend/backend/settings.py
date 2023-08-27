@@ -115,8 +115,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+BACKEND_URL = "http://localhost:3000"
+
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
+    BACKEND_URL,
 ]
 
 AUTH_USER_MODEL = 'todo.CustomUser'
@@ -164,6 +166,8 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
     # パスワードリセット完了用URL
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_TIMEOUT': 3600,  # リセットURLの有効期限（秒単位）
+    'USERNAME_RESET_TIMEOUT': 3600,
 
     'SERIALIZERS': {
         'user_create': 'todo.serializers.CustomUserSerializer',
