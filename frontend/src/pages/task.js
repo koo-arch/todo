@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import Header from '../components/header';
-import CreateTask from '../components/createTask';
-import GetTask from '../components/getTask';
-import TaskList from '../components/taskList';
+import CreateTask from '../features/createTask';
+import GetTask from '../features/getTask';
+import TaskList from '../features/taskList';
 import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
 import { Container, useMediaQuery, Typography, Grid, Fab } from '@mui/material';

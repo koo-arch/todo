@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { requestAPI, requestData } from '../api/requests';
+import { requestAPI } from '../api/requests';
 import CustomSnackbar from '../components/customSnackbar';
 import { Contexts } from '../App';
 import urls from '../api/urls';
@@ -22,8 +21,6 @@ const ResetPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const postEmail = (data) => {
-        const requestJson = new requestData(data);
-
         const param = {
             data: data,
             request: data,

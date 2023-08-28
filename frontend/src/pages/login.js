@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
 import { Contexts } from '../App';
 import urls from '../api/urls';
@@ -21,7 +21,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PasswordField from '../components/passwordField';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const Login = (props) => {
+const Login = () => {
     const defaultTheme = createTheme();
     const navigation = useNavigate();
     const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);

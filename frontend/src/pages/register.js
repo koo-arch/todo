@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
 import { Contexts } from "../App";

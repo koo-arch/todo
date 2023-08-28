@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Header from '../components/header';
-import GetTask from '../components/getTask';
-import FinishedList from '../components/finishedList';
+import GetTask from '../features/getTask';
+import FinishedList from '../features/finishedList';
 import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
 import { Container, Typography } from '@mui/material';

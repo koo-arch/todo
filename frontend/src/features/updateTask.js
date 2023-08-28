@@ -6,7 +6,7 @@ import FormDialog from './formDialog';
 import { Contexts } from '../App';
 import { TextField, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import DateTimeField from './dateTimeField';
+import DateTimeField from '../components/dateTimeField';
 
 const UpdateTask = (props) => {
     const { url, id, task_name, comment, deadline, iconSize, size } = props;

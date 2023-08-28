@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { requestAPI } from '../api/requests';
 import { Contexts } from '../App';
-import Loading from './loading';
+import Loading from '../components/loading';
 
 const GetTask = ({ displayComponent: DisplayComponent, url }) => {
     const initialState = [{
