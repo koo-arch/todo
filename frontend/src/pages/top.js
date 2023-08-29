@@ -1,9 +1,13 @@
 import React from "react";
-import { Button, Box, Container, CssBaseline, Grid, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useCustomContext } from "../components/customContexts";
+import CustomSnackbar from "../components/customSnackbar";
+import { Button, Box, Container, CssBaseline, Typography } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Top = () => {
     const defaultTheme = createTheme();
+    const { snackbarStatus } = useCustomContext();
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component={"main"} maxWidth="xs">
@@ -22,7 +26,8 @@ const Top = () => {
                     <Button 
                         variant="contained"
                         fullWidth
-                        href="register"
+                        component={Link}
+                        to="/register"
                         size="large"
                         sx={{ mt: 3, mb: 2}}
                     >
@@ -31,7 +36,8 @@ const Top = () => {
                     <Button
                         variant="outlined"
                         fullWidth
-                        href="login"
+                        component={Link}
+                        to="/login"
                         size="large"
                         sx={{mb: 2 }}
                     >
@@ -39,6 +45,7 @@ const Top = () => {
                     </Button>
                 </Box>
             </Container>
+            <CustomSnackbar {...snackbarStatus}/>
         </ThemeProvider>
     );
 };

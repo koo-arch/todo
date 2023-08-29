@@ -2,14 +2,13 @@ import { useCookies } from 'react-cookie';
 import axios from '../api/axios';
 import urls from '../api/urls';
 import useLogout from './useLogout';
-import { Contexts } from '../App';
-import { useContext } from 'react';
+import { useCustomContext } from '../components/customContexts';
 
 
 const useRefreshToken = () => {
   const [cookies, setCookie] = useCookies();
   const logout = useLogout();
-  const { isRedirect, setIsRedirect } = useContext(Contexts);
+  const { setSnackbarStatus } = useCustomContext();
 
   const refresh = async () => {
     // cookieに保存されたrefresh_tokenを送付してaccess_tokenを取得する
@@ -21,9 +20,12 @@ const useRefreshToken = () => {
       console.log(response)
       return response.data.access;
     } catch (err) {
-      setIsRedirect(true);
-      console.log("リダイレクトする");
       logout();
+      setSnackbarStatus({
+        open: true,
+        severity: "error",
+        message: `エラーが発生しました。再度ログインしてください。(code:${err.response.status})`,
+      });
     }
   };
 

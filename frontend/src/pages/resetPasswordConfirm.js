@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
 import CustomSnackbar from '../components/customSnackbar';
 import PasswordField from '../components/passwordField';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import urls from '../api/urls';
 import {
     Button,
@@ -18,7 +18,7 @@ import LockResetIcon from '@mui/icons-material/LockReset';
 const ResetPasswordConfirm = () => {
     const navigation = useNavigate();
     const { uid, token } = useParams();
-    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
+    const { snackbarStatus, setSnackbarStatus } = useCustomContext();
     const { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
     const postNewPassword = (data) => {

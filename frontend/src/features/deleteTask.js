@@ -1,9 +1,9 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import FormDialog from './formDialog';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import { 
     IconButton,
     List,
@@ -17,7 +17,7 @@ const DeleteTask = (props) => {
     const { url, id, task_name, comment, deadline, iconSize, size } = props;
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken'])
     const { register, handleSubmit } = useForm();
-    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useCustomContext();
     const openRef = useRef();
     const closeRef = useRef();
 
@@ -72,7 +72,7 @@ const DeleteTask = (props) => {
                 buttonText="削除"
                 color="error"
             >
-                <form id="form" onSubmit={handleSubmit(onSubmit)}>
+                <form id="dialogform" onSubmit={handleSubmit(onSubmit)}>
                     <input type="hidden" value={id} {...register('id')} />
                     <DialogContentText color="error">
                         以下の項目を削除してよろしいですか？

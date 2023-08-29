@@ -22,7 +22,7 @@ const FormDialog = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button variant='outlined' onClick={closeDialog}>キャンセル</Button>
-                    <Button variant='contained' type="submit" form="form" color={color}>{buttonText}</Button>
+                    <Button variant='contained' type="submit" form="dialogform" color={color}>{buttonText}</Button>
                 </DialogActions>
             </Dialog>
         </>

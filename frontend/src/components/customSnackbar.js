@@ -1,5 +1,5 @@
-import React, { useContext, forwardRef } from 'react';
-import { Contexts } from '../App';
+import React, { forwardRef } from 'react';
+import { useCustomContext } from './customContexts';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -9,7 +9,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const CustomSnackbar = (props) => {
     const { open, severity, message } = props;
-    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
+    const { snackbarStatus, setSnackbarStatus } = useCustomContext();
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;

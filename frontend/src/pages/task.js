@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import Header from '../components/header';
 import CreateTask from '../features/createTask';
 import GetTask from '../features/getTask';
@@ -7,10 +7,10 @@ import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
 import { Container, useMediaQuery, Typography, Grid, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 
 const Task = () => {
-    const { snackbarStatus } = useContext(Contexts);
+    const { snackbarStatus } = useCustomContext();
     const isMobileSize = useMediaQuery('(max-width: 500px');
     const openRef = useRef();
 

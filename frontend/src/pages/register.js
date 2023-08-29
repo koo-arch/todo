@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { requestAPI, requestData } from "../api/requests";
 import urls from "../api/urls";
-import { Contexts } from "../App";
+import { useCustomContext } from '../components/customContexts';
 import CustomSnackbar from "../components/customSnackbar";
 import PasswordField from "../components/passwordField";
 import { 
@@ -23,7 +23,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const Register = () => {
     const navigation = useNavigate();
-    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
+    const { snackbarStatus, setSnackbarStatus } = useCustomContext();
     const { register, handleSubmit, getValues, clearErrors, setError, formState: { errors }, } = useForm();
     const defaultTheme = createTheme();
 
@@ -60,13 +60,14 @@ const Register = () => {
                 // 各項目にエラーをセット
                 Object.keys(errRes).map((key) => {
                     const messages = errRes[`${key}`]
-                    const newMessages = new Array();
+                    const newMessages = [];
 
                     // メッセージ内のスペースを削除
                     for (let i = 0; i < messages.length; i++) {
                         newMessages[i] = messages[i].replace(/ /g, "")
                     }
                     setError(`${key}`, { type: "validate", message: newMessages})
+                    return setError;
                 })
             });
     };

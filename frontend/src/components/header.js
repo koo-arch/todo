@@ -1,30 +1,25 @@
 import React, { useState, useEffect} from 'react';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import useLogout from '../hooks/useLogout';
 import { requestAPI } from '../api/requests';
 import urls from '../api/urls';
+import { useCustomContext } from './customContexts';
 import useCustomAxios from '../hooks/useCustomAxios';
 import TemporaryDrawer from './temporaryDrawer';
 import {
   AppBar,
-  Button,
   Box,
   Toolbar,
   Typography,
   IconButton,
-  Link,
   Menu,
   MenuItem
 } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const Header = () => {
-  const initialState = {
-    id: '',
-    email: '',
-  }
-
-  const [userInfo, setUserInfo] = useState(initialState);
+  const { userInfo, setUserInfo, setSnackbarStatus } = useCustomContext(); 
   const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
   const logout = useLogout();
   const customAxios = useCustomAxios();
@@ -60,6 +55,11 @@ const Header = () => {
         console.log(err)
         console.log(err.response.data)
         logout();
+        setSnackbarStatus({
+          open: true,
+          severity: "error",
+          message: `エラーが発生しました。再度ログインしてください。(code:${err.response.status})`,
+        });
       })
     },[]);
   
@@ -97,10 +97,13 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={() => {
-                handleClose();
-                logout();
+              <MenuItem component={Link} to={"/account"} onClick={handleClose}>
+                アカウント設定
+              </MenuItem>
+              <MenuItem 
+                onClick={() => {
+                  handleClose();
+                  logout();
                 }}
               >
                 ログアウト

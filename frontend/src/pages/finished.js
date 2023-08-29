@@ -5,10 +5,10 @@ import FinishedList from '../features/finishedList';
 import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
 import { Container, Typography } from '@mui/material';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 
 const Finished = () => {
-    const { snackbarStatus } = useContext(Contexts);
+    const { snackbarStatus } = useCustomContext();
     return (
         <div>
             <Header/>

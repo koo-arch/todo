@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { requestAPI } from '../api/requests';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import Loading from '../components/loading';
 
 const GetTask = ({ displayComponent: DisplayComponent, url }) => {
@@ -17,7 +17,7 @@ const GetTask = ({ displayComponent: DisplayComponent, url }) => {
     
     const [taskList, setTaskList] = useState(initialState);
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
-    const { postFlag } = useContext(Contexts);
+    const { postFlag } = useCustomContext();
     const [isLoading, setIsLoading] = useState(true);
     
 

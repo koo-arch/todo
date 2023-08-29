@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { requestAPI, requestData } from '../api/requests';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import urls from '../api/urls';
 import CustomSnackbar from '../components/customSnackbar';
 import { 
@@ -24,7 +24,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 const Login = () => {
     const defaultTheme = createTheme();
     const navigation = useNavigate();
-    const { snackbarStatus, setSnackbarStatus } = useContext(Contexts);
+    const { snackbarStatus } = useCustomContext();
     const [cookies, setCookie] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, clearErrors, setError, formState: { errors } } = useForm();
 
@@ -57,13 +57,14 @@ const Login = () => {
                     // 各項目にエラーをセット
                     Object.keys(errRes).map((key) => {
                         const messages = errRes[`${key}`]
-                        const newMessages = new Array();
+                        const newMessages = [];
                         
                         // メッセージ内のスペースを削除
                         for (let i = 0; i < messages.length; i++) {
                             newMessages[i] = messages[i].replace(/ /g, "")
                         }
                         setError(`${key}`, { type: "validate", message: newMessages})
+                        return setError;
                     })
                 } else {
                     setError('email', { type: "validate", message: "メールアドレスかパスワードが違います" })

@@ -1,10 +1,10 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { useForm, Controller } from 'react-hook-form';
 import FormDialog from './formDialog';
 import { requestAPI, requestData } from '../api/requests';
 import urls from '../api/urls';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import { TextField, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DateTimeField from '../components/dateTimeField';
@@ -14,7 +14,7 @@ const CreateTask = (props) => {
     const { create } = props;
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useCustomContext();
     const openRef = useRef();
     const closeRef = useRef();
 
@@ -72,7 +72,7 @@ const CreateTask = (props) => {
             title="タスク登録"
             buttonText="登録"
         >
-            <form id="form" onSubmit={handleSubmit(onSubmit)}>
+            <form id="dialogform" onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                     required
                     error={!!errors.task_name}

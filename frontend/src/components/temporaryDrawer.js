@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
     Drawer,
     Divider,
@@ -36,17 +37,17 @@ const TemporaryDrawer = (props) => {
                     <ListItem>
                         <ListItemText primary="ToDoリスト"/>
                     </ListItem>
-                    <ListItem>
+                    <ListItemButton component={Link} to="/account" onClick={toggleDrawer}>
                         <ListItemText primary={user}/>
-                    </ListItem>
+                    </ListItemButton>
                     <Divider/>
-                    <ListItemButton href='task'>
+                    <ListItemButton component={Link} to="/task" onClick={toggleDrawer}>
                         <ListItemIcon>
                             <FormatListBulletedIcon/>
                         </ListItemIcon>
                         <ListItemText primary="タスク一覧" />
                     </ListItemButton>
-                    <ListItemButton href='finished'>
+                    <ListItemButton component={Link} to="/finished" onClick={toggleDrawer}>
                         <ListItemIcon>
                             <DoneIcon/>
                         </ListItemIcon>

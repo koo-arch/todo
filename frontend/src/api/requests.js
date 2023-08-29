@@ -41,7 +41,7 @@ export class requestData {
         return {
             uid: this.data.uid,
             token: this.data.token,
-            new_email: this.data.password,
+            new_email: this.data.email,
         }
     }
 }
@@ -92,5 +92,10 @@ export class requestAPI {
         } else {
             return await axios.delete(this.url + `${this.data.id}/`, { headers: this.headers() })
         }
+    }
+
+    async deleteAccount() {
+            // axios.dalete()のbodyは{ data: boby }の形式
+            return await axios.delete(this.url,  { headers: this.headers(), data: this.request })
     }
 }

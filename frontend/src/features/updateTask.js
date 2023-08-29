@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
 import FormDialog from './formDialog';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import { TextField, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DateTimeField from '../components/dateTimeField';
@@ -12,7 +12,7 @@ const UpdateTask = (props) => {
     const { url, id, task_name, comment, deadline, iconSize, size } = props;
     const [cookies, ] = useCookies(['accesstoken', 'refreshtoken'])
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useCustomContext();
     const openRef = useRef();
     const closeRef = useRef();
 
@@ -65,7 +65,7 @@ const UpdateTask = (props) => {
                 title="タスク編集"
                 buttonText="変更"
             >
-                <form id="form" onSubmit={handleSubmit(onSubmit)}>
+                <form id="dialogform" onSubmit={handleSubmit(onSubmit)}>
                     <input type="hidden" value={id} {...register('id')}/>
                     <TextField
                         required

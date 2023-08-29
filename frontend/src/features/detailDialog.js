@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import UpdateTask from './updateTask';
 import DeleteTask from './deleteTask';
 import FinishButton from './finishButton';
@@ -17,7 +17,7 @@ import {
 
 const DetailDialog = (props) => {
     const { url, open, onClose, rowData } = props;
-    const { postFlag } = useContext(Contexts);
+    const { postFlag } = useCustomContext();
     const iconSize = {
         width: 30,
         height: 30,

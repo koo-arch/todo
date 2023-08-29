@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { requestAPI, requestData } from '../api/requests';
-import { Contexts } from '../App';
+import { useCustomContext } from '../components/customContexts';
 import { Button } from '@mui/material';
 
 const FinishButton = (props) => {
     const { url, message, id, task_name, comment, deadline, is_finished, buttonText } = props;
     const [cookies,] = useCookies(['accesstoken', 'refreshtoken']);
     const { register, handleSubmit } = useForm();
-    const { postFlag, setPostFlag, setSnackbarStatus } = useContext(Contexts);
+    const { postFlag, setPostFlag, setSnackbarStatus } = useCustomContext();
 
     const putIsFinished = (data) => {
         const requestJson = new requestData(data);
