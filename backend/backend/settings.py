@@ -14,8 +14,8 @@ import os
 from os.path import join, dirname
 from pathlib import Path
 from dotenv import load_dotenv
-
 import datetime
+import dj_database_url
 
 # .envファイルの内容を読み込見込む
 load_dotenv(verbose=True)
@@ -83,6 +83,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
+
+DATABASES = {
+    "default": dj_database_url.config()
+}
 
 
 # Password validation
