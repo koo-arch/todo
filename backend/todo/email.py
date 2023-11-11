@@ -26,7 +26,7 @@ class PasswordResetEmail(EmailManager):
         context["email"] = user.email
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        context["backend"] = settings.BACKEND_URL
+        context["frontend"] = settings.FRONTEND_URL
         context["url"] = settings.DJOSER["PASSWORD_RESET_CONFIRM_URL"].format(**context)
         return context
     
@@ -50,7 +50,7 @@ class UsernameResetEmail(EmailManager):
         context["email"] = user.email
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        context["backend"] = settings.BACKEND_URL
+        context["frontend"] = settings.FRONTEND_URL
         context["url"] = settings.DJOSER["USERNAME_RESET_CONFIRM_URL"].format(**context)
         return context
 

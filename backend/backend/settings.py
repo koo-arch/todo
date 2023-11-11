@@ -10,17 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+from os.path import join, dirname
 from pathlib import Path
+from dotenv import load_dotenv
 
 import datetime
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# .envファイルの内容を読み込見込む
+load_dotenv(verbose=True)
+
+dotenv_path = join(dirname(__file__), ".env")
+load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 # Quick-start development settings - unsuitable for production
@@ -79,7 +85,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -87,9 +92,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -115,74 +126,71 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-BACKEND_URL = "http://localhost:3000"
+FRONTEND_SERVER = os.environ.get("FRONTEND_SERVER")
+
+FRONTEND_URL = FRONTEND_SERVER + os.environ.get("FRONTEND_URL")
 
 CORS_ORIGIN_WHITELIST = [
-    BACKEND_URL,
+    FRONTEND_SERVER,
 ]
 
-AUTH_USER_MODEL = 'todo.CustomUser'
+AUTH_USER_MODEL = "todo.CustomUser"
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
 SIMPLE_JWT = {
-    #トークンをJWTに設定
-    'AUTH_HEADER_TYPES': ('JWT'),
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=10),
-    'ROTATE_REFRESH_TOKENS': True,
-    'UPDATE_LAST_LOGIN': True,
+    # トークンをJWTに設定
+    "AUTH_HEADER_TYPES": ("JWT"),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=10),
+    "ROTATE_REFRESH_TOKENS": True,
+    "UPDATE_LAST_LOGIN": True,
 }
 
-# ローカル確認用
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # 本番環境用
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xxx@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxx'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'xxx@gmail.com'
 
 DJOSER = {
-    'TOKEN_MODEL': None,
+    "TOKEN_MODEL": None,
     # メールアドレス変更完了メール
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
     # パスワード変更完了メール
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
     # メールアドレスリセット完了用URL
-    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    "USERNAME_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
     # パスワードリセット完了用URL
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_TIMEOUT': 3600,  # リセットURLの有効期限（秒単位）
-    'USERNAME_RESET_TIMEOUT': 3600,
-
-    'SERIALIZERS': {
-        'user_create': 'todo.serializers.CustomUserSerializer',
-        'user': 'todo.serializers.CustomUserSerializer',
-        'current_user': 'todo.serializers.CustomUserSerializer',
+    "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    "SERIALIZERS": {
+        "user_create": "todo.serializers.CustomUserSerializer",
+        "user": "todo.serializers.CustomUserSerializer",
+        "current_user": "todo.serializers.CustomUserSerializer",
     },
-
-    'EMAIL': {
+    "EMAIL": {
         # パスワードリセット
-        'password_reset': 'todo.email.PasswordResetEmail',
+        "password_reset": "todo.email.PasswordResetEmail",
         # パスワードリセット完了
-        'password_changed_confirmation': 'todo.email.PasswordChangedConfirmationEmail',
+        "password_changed_confirmation": "todo.email.PasswordChangedConfirmationEmail",
         # メールアドレスリセット
-        'username_reset': 'todo.email.UsernameResetEmail',
+        "username_reset": "todo.email.UsernameResetEmail",
         # メールアドレスリセット完了
-        'username_changed_confirmation': 'todo.email.UsernameChangedConfirmationEmail',
+        "username_changed_confirmation": "todo.email.UsernameChangedConfirmationEmail",
     },
 }
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
